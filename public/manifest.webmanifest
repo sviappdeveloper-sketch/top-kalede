@@ -1,0 +1,20 @@
+{
+  "name": "Top Kalede",
+  "short_name": "Top Kalede",
+  "description": "Penaltı oyunu: macera, turnuvalar, seviye ligleri ve golpuan.",
+  "lang": "tr",
+  "id": "/",
+  "start_url": "/?kaynak=uygulama",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8ecdc",
+  "theme_color": "#f8ecdc",
+  "categories": ["games", "sports"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

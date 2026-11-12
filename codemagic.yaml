@@ -1,0 +1,103 @@
+# Codemagic: Top Kalede iPhone sürümünü derler, imzalar ve App Store Connect'e (TestFlight) yükler.
+# Hatim Kardeşim ile aynı düzen: gizli değer yalnızca bir tane, "asc" grubundaki ASC_KEY_P8
+# (App Store Connect .p8 anahtarı). Sertifika, profil, paket kimliği ve "Apple ile Giriş"
+# yetkisi tool/ios_signing.py ile API üzerinden otomatik hazırlanır.
+workflows:
+  ios-testflight:
+    name: iOS TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      groups:
+        - asc
+      vars:
+        ASC_KEY_ID: 9PJ9V3965R
+        ASC_ISSUER_ID: 195bfec6-edd0-4a8e-8cd8-6a1d5d51bb6e
+        APPLE_TEAM_ID: GS55JS3WKJ
+        P12_PASS: topkalede-ci-gecici
+      xcode: latest
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: main
+          include: true
+      cancel_previous_builds: true
+    scripts:
+      - name: Xcode projesini üret
+        script: |
+          brew install xcodegen
+          cd ios && xcodegen generate
+      - name: Sertifika, profil, paket kimliği, Apple ile Giriş
+        script: |
+          set -e
+          export RUNNER_TEMP=$HOME/imza GITHUB_ENV=$HOME/imza/env
+          mkdir -p $RUNNER_TEMP
+          pip3 install --quiet pyjwt cryptography || pip3 install --quiet --break-system-packages pyjwt cryptography
+          python3 tool/ios_signing.py
+          keychain initialize
+          keychain add-certificates --certificate $RUNNER_TEMP/dagitim.p12 --certificate-password "$P12_PASS"
+          UUID=$(grep '^PROFILE_UUID=' $GITHUB_ENV | cut -d= -f2-)
+          mkdir -p "$HOME/Library/MobileDevice/Provisioning Profiles"
+          cp $RUNNER_TEMP/profil.mobileprovision "$HOME/Library/MobileDevice/Provisioning Profiles/$UUID.mobileprovision"
+          xcode-project use-profiles --project ios/TopKalede.xcodeproj
+      - name: Derleme numarası
+        script: |
+          N=$((10 + ${BUILD_NUMBER:-0}))
+          echo "Derleme numarası: $N"
+          sed -i '' "s/^CURRENT_PROJECT_VERSION = .*/CURRENT_PROJECT_VERSION = $N/" ios/Config.xcconfig
+      - name: iPhone paketi (IPA)
+        script: |
+          xcode-project build-ipa --project ios/TopKalede.xcodeproj --scheme TopKalede --config Release \
+            --export-options-plist=$HOME/export_options.plist
+    artifacts:
+      - build/ios/ipa/*.ipa
+    publishing:
+      app_store_connect:
+        api_key: $ASC_KEY_P8
+        key_id: 9PJ9V3965R
+        issuer_id: 195bfec6-edd0-4a8e-8cd8-6a1d5d51bb6e
+        submit_to_testflight: false
+
+  # App Store Connect: mağaza sayfasını doldurur ve son derlemeyi sürüme bağlar (tarayıcı gerekmez).
+  # Metinler app-store/metadata.json, ekran görüntüleri app-store/ekran-goruntuleri/.
+  # Codemagic'te "Start new build" > bu işlem; ya da "asc" dalına gönderim.
+  asc-hazirla:
+    name: "App Store: sayfayı hazırla"
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      groups:
+        - asc
+      vars:
+        ASC_KEY_ID: 9PJ9V3965R
+        ASC_ISSUER_ID: 195bfec6-edd0-4a8e-8cd8-6a1d5d51bb6e
+    triggering:
+      events:
+        - push
+      branch_patterns:
+        - pattern: asc
+          include: true
+    scripts:
+      - name: Mağaza sayfası, ekran görüntüleri, derleme
+        script: |
+          pip3 install --quiet pyjwt cryptography || pip3 install --quiet --break-system-packages pyjwt cryptography
+          python3 tool/asc_islem.py
+
+  # Aynısı + sürümü Apple incelemesine gönderir. Yalnızca elle başlatılır.
+  asc-gonder:
+    name: "App Store: incelemeye gönder"
+    instance_type: mac_mini_m2
+    max_build_duration: 45
+    environment:
+      groups:
+        - asc
+      vars:
+        ASC_KEY_ID: 9PJ9V3965R
+        ASC_ISSUER_ID: 195bfec6-edd0-4a8e-8cd8-6a1d5d51bb6e
+        GONDER: evet
+    scripts:
+      - name: Hazırla ve incelemeye gönder
+        script: |
+          pip3 install --quiet pyjwt cryptography || pip3 install --quiet --break-system-packages pyjwt cryptography
+          python3 tool/asc_islem.py
