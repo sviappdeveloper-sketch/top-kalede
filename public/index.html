@@ -401,11 +401,11 @@
 
     <h3>Şut nasıl çekilir</h3>
     <ul>
-      <li>Parmağını sahada herhangi bir yere koy ve <b>sapan gibi geriye çek</b>, sonra bırak. Top, çektiğin yönün tersine gider: <b>aşağı</b> çekersen yükselir, <b>sola</b> çekersen sağa gider.</li>
-      <li>Az aşağı çekmek yerden şut, çok aşağı çekmek üst direğin üstü demektir. Topun çevresindeki halka çekişi gösterir.</li>
-      <li>Nişan alırken <b>noktalı yardım çizgisi</b> topun gideceği yolun başını gösterir.</li>
-      <li>Çok kısa bir çekiş şut sayılmaz; parmağını kaldırınca iptal olur.</li>
-      <li><b>Falso:</b> Geri çekerken parmağını düz değil <b>yay gibi kıvırarak</b> çek. Ne kadar kıvırırsan top havada o kadar döner; yardım çizgisi sarıya döner ve topun üstünde falso yönü ile gücü yazar. Falsolu şutu kalecinin okuması zordur, frikikte barajı dolanmanın yolu da budur.</li>
+      <li><b>1) Hedefi seç:</b> Kalede topu göndermek istediğin yere dokun (parmağını kaydırarak yerini değiştirebilirsin). Turuncu nişangâh orada kalır; her şutta yeniden seçmen gerekmez. Kornerde ceza sahasındaki halkalı arkadaşına dokun.</li>
+      <li><b>2) Geri çek ve bırak:</b> Parmağını sahada bir yere koy, <b>aşağı doğru çek</b>, bırak. Çekişin uzunluğu <b>güçtür</b>: tam güçte top hedefe gider, fazlası yukarı (üst direğin üstüne), azı aşağı (barajın ya da yerin içine) gider.</li>
+      <li>Topun çevresindeki halka gücü gösterir: <b>yeşil</b> tam, <b>sarı</b> az, <b>kırmızı</b> fazla. Kolay seviyelerde halkada ideal gücün çentiği de görünür.</li>
+      <li><b>Falso:</b> Çekerken parmağını <b>yana doğru</b> çek. Sola çekersen top sağa, sağa çekersen sola kıvrılarak yine hedefe gider. Falsolu şutu kaleci zor okur, frikikte de barajın yanından dolanır.</li>
+      <li>Noktalı yardım çizgisi topun gideceği yolun başını gösterir. Çok kısa bir çekiş şut sayılmaz.</li>
     </ul>
 
     <h3>Süre ve puanlama</h3>
@@ -777,7 +777,9 @@ const CROWD = (()=>{ const a=[]; let s=11; const rnd=()=> (s=(s*9301+49297)%2332
   for(let row=0; row<7; row++) for(let i=0;i<46;i++) a.push({ x:i*16+rnd()*8-8, y:row, c:rnd() }); return a; })();
 function shade(hex, f){ const n=parseInt(hex.slice(1),16); let r=n>>16, gg=n>>8&255, b=n&255;
   const m=v=>Math.max(0,Math.min(255,Math.round(f<0 ? v*(1+f) : v+(255-v)*f))); return '#'+((1<<24)+(m(r)<<16)+(m(gg)<<8)+m(b)).toString(16).slice(1); }
-function drawScene(g){
+// tribünler: gol sevinci dışında değişmez; telefonu yormamak için bir kez çizilip saklanır
+let STAND_CACHE=null, STAND_KEY='';
+function drawStands(g){
   const hor=CAM.hor, standTop=hor-170, upTop=hor-400;
   // üst tribün, çatı ve projektörler
   const night=!!(curLevel && curLevel.night && MODE==='level');
@@ -800,6 +802,21 @@ function drawScene(g){
   g.fillStyle=SKY.board||'#2a6f97'; g.fillRect(-20, hor-14, W+40, 12);
   g.fillStyle='rgba(255,255,255,.75)'; g.font='800 9px ui-sans-serif,system-ui,sans-serif';
   for(let x=10;x<W;x+=120) g.fillText('TOP KALEDE', x, hor-5);
+}
+function drawScene(g){
+  const hor=CAM.hor;
+  const night=!!(curLevel && curLevel.night && MODE==='level');
+  const key=[SKY.stand,SKY.stand2,SKY.board,night,scale,dpr].join('|');
+  if(lastGoalT>0) drawStands(g);
+  else {
+    if(key!==STAND_KEY || !STAND_CACHE){
+      const c=STAND_CACHE||document.createElement('canvas'), f=scale*dpr;
+      c.width=Math.ceil((W+80)*f); c.height=Math.ceil((hor+70)*f);
+      const cg=c.getContext('2d'); cg.setTransform(1,0,0,1,0,0); cg.clearRect(0,0,c.width,c.height); cg.setTransform(f,0,0,f,40*f,0); drawStands(cg);
+      STAND_CACHE=c; STAND_KEY=key;
+    }
+    g.drawImage(STAND_CACHE, -40, 0, W+80, hor+70);
+  }
   // çim: perspektifli şeritler
   const fd = KICK==='pen' ? GOAL.z+900-SPOT.z : 6000, P0=(d)=>{ const w=camPt(0,d); return proj(w.x,0,w.z); };
   const far=P0(fd); g.fillStyle=SKY.grass||'#68a853'; g.fillRect(-20, far.y, W+40, CAM.hor-far.y+1);
@@ -1141,7 +1158,7 @@ function mateTouch(c, b, ghost){
     }
     // kafa vuruşu: kalenin rastgele bir noktasına (tohumlu)
     const r1=hrand(b.sid,61), r2=hrand(b.sid,73), side = r1<.5 ? -1 : 1;
-    const tx=GOAL.x+side*(GOAL.w/2)*(.3+.85*hrand(b.sid,83)), th=25+r2*235;
+    const tx=GOAL.x+side*(GOAL.w/2)*(.3+.76*hrand(b.sid,83)), th=25+r2*212;
     const D=Math.hypot(tx-b.x, GOAL.z-b.z), T=Math.max(.3, D/1500);
     b.vx=(tx-b.x)/T; b.vz=(GOAL.z-b.z)/T; b.vy=(-th + h - .5*GRAV*T*T)/T;
     b.sid += 5000;                                                 // kaleci yeni bir şut olarak görsün
@@ -1316,7 +1333,7 @@ class Court {
     items.push({ d:gd, f:()=>drawGoal(g, true) });
     if(this.defs.length) items.push({ d:WALL_D, f:()=>drawWall(g, this.defs) });
     for(const m of (this.mates||[])) items.push({ d:depthOf(m.x,m.z), f:()=>drawMate(g, m) });
-    const fly=this.balls.some(b=>!b.fade && depthOf(b.x,b.z)>200 && depthOf(b.x,b.z)<gd+GOAL.depth);
+    const fly=this.balls.some(b=>!b.fade && !(b.rest>0) && b.y < -BR-1 && depthOf(b.x,b.z)>200 && depthOf(b.x,b.z)<gd+GOAL.depth);
     items.push({ d:-40, f:()=>{ g.save(); if(fly) g.globalAlpha=.4; this.fig.draw(g); g.restore(); } });
     if(this.holding) items.push({ d:0, f:()=>{ const q=proj(SPOT.x,BR,SPOT.z); drawBall(g,q.x,q.y,.4,this.color,1,BR*q.k); } });
     items.sort((p,q)=>q.d-p.d).forEach(it=>it.f());
@@ -1335,13 +1352,14 @@ class Court {
     } else if(this.state==='sitting' || this.state==='doubting'){
       g.globalAlpha=.55+.45*Math.sin(performance.now()/300); g.fillStyle=C.ink; g.font='700 24px ui-sans-serif,system-ui,sans-serif';
       g.fillText('Vazgeçme. Dokun, kalk. Topun süresi işliyor!', 360, 790); g.globalAlpha=1;
-    } else if(game==='play' && round===0 && this.left===SHOTS && this.state==='ready' && !this.aim){
+    } else if(game==='play' && this.state==='ready' && !this.aim && (!AIMT || (round===0 && this.left===SHOTS))){
       g.globalAlpha=.5+.5*Math.sin(performance.now()/350); g.fillStyle='#fbfaf6'; g.font='700 22px ui-sans-serif,system-ui,sans-serif';
       const hy = KICK==='ck' ? 600 : 1192;
-      g.fillText('Topu geri çek · Nişan al · Bırak', 360, hy); g.font='600 18px ui-sans-serif,system-ui,sans-serif';
-      g.fillText(KICK==='ck' ? 'Halkadaki arkadaşının kafasına orta aç · Kıvır: falso' : 'Falso için çekerken parmağını yay gibi kıvır', 360, hy+28); g.globalAlpha=1;
+      g.fillText(AIMT ? '2) Geri çek: güç · Yana çek: falso · Bırak' : (KICK==='ck' ? '1) Ceza sahasında hedefe dokun' : '1) Kalede vuracağın yere dokun'), 360, hy); g.font='600 18px ui-sans-serif,system-ui,sans-serif';
+      g.fillText(AIMT ? 'Halka yeşilse güç tam, kırmızıysa fazla' : (KICK==='ck' ? 'Halkalı arkadaşının kafasını seç' : 'Sonra topu geri çekip bırak'), 360, hy+28); g.globalAlpha=1;
     }
     g.textAlign='left';
+    drawTarget(g);
     if(this.aim) drawAim(g, this);
   }
 }
@@ -1374,7 +1392,7 @@ function startTournament(){
 function prepareTurn(){
   if(MODE==='level' && curLevel) applyLevelEnv(curLevel); else setCourt(round);
   const p=players[turnIdx]; p.roundPts=0;
-  court.reset(p.color); court.balls.forEach(b=>b.fade=true);
+  court.reset(p.color); court.balls.forEach(b=>b.fade=true); AIMT=null;
   timeLeft=BALL_TIME; turnEnding=false; lastTick=99;
   game='turnwait';
   if(MODE==='level' && curLevel){ levelIntro(p); return; }
@@ -3223,6 +3241,31 @@ const MAXPULL=230, POW_X=3.7, POW_Y=3.7;
 let activePointer=null;
 function toLocal(e){ return { x:(e.clientX-offX)/scale, y:(e.clientY-offY)/scale }; }
 const COURT_TOP = 700;   // skor tablosuna dokunmak sayılmaz
+// Nişan iki adımlı: 1) kalede (kornerde ceza sahasında) hedefe dokun, 2) geri çek.
+// Çekişin uzunluğu güç: ideal güçte top hedefe gider, fazlası yukarı, azı aşağı gider. Yana çekiş falso verir.
+let AIMT = null;                       // { kind:'goal', ox, h } ya da { kind:'ground', x, z, h }
+function targetWorld(){ if(!AIMT) return null; return AIMT.kind==='goal' ? { x:GOAL.x+AIMT.ox, z:GOAL.z, h:AIMT.h } : { x:AIMT.x, z:AIMT.z, h:AIMT.h }; }
+function goalRect(){ const a=proj(GOAL.x-GOAL.w/2, GOAL.h, GOAL.z), b=proj(GOAL.x+GOAL.w/2, 0, GOAL.z);
+  return { x0:Math.min(a.x,b.x), x1:Math.max(a.x,b.x), y0:a.y, y1:b.y }; }
+function inTargetZone(pt){
+  if(KICK==='ck'){ const o=proj(SPOT.x,0,SPOT.z); return pt.y < o.y-170 && pt.y > CAM.hor-40; }
+  const r=goalRect(), m=Math.max(46, (r.x1-r.x0)*.12);
+  return pt.x>r.x0-m && pt.x<r.x1+m && pt.y>r.y0-m && pt.y<r.y1+m*.8;
+}
+function setTargetFrom(pt){
+  if(KICK==='ck'){
+    // halkadaki arkadaşa yakın dokunuş onun kafasına kilitlenir
+    let best=null, bd=70; for(const m of (court.mates||[])){ if(m.team!=='a') continue; const q=proj(m.x,170,m.z), d=Math.hypot(q.x-pt.x, q.y-pt.y); if(d<bd){ bd=d; best=m; } }
+    if(best){ AIMT={ kind:'ground', x:best.x, z:best.z, h:205, mate:true }; return; }
+    const k=(pt.y-CAM.hor)/CAM.y; if(k<=0.01) return;
+    const dep=CAM.f/k-CAM.back, l=(pt.x-CAM.cx)/k-CAMF.lat, w=camPt(l, dep);
+    AIMT={ kind:'ground', x:Math.max(-1150, Math.min(1150, w.x)), z:Math.max(GOAL.z-1650, Math.min(GOAL.z-90, w.z)), h:205 }; return;
+  }
+  let x=GOAL.x, k=1;
+  for(let it=0; it<3; it++){ k=proj(x,0,GOAL.z).k; const l=(pt.x-CAM.cx)/k-CAMF.lat; x=SPOT.x+(l-(GOAL.z-SPOT.z)*CAMF.rz)/(CAMF.rx||1); }
+  const h=CAM.y+(CAM.hor-pt.y)/k, hw=GOAL.w/2+50;
+  AIMT={ kind:'goal', ox:Math.max(-hw, Math.min(hw, x-GOAL.x)), h:Math.max(BR+4, Math.min(GOAL.h+45, h)) };
+}
 cv.addEventListener('pointerdown', e => {
   if(game!=='play' || botTurn()) return; audio();
   const pt=toLocal(e);
@@ -3230,57 +3273,75 @@ cv.addEventListener('pointerdown', e => {
   const p=court; p.idle=0;
   if(p.state==='sitting' || p.state==='doubting'){ p.fig.go('hold',.6); p.state='standup'; return; }
   if(!p.canShoot() || p.aim) return;
-  p.aim={sx:pt.x, sy:pt.y, x:pt.x, y:pt.y, path:[pt]}; activePointer=e.pointerId;
+  activePointer=e.pointerId; try{ cv.setPointerCapture(e.pointerId); }catch(_){}
+  if(inTargetZone(pt)){ setTargetFrom(pt); p.aim={ mode:'target' }; buzz(12); return; }
+  if(!AIMT){ p.floaters.push({ x:360, y:KICK==='ck'?700:goalRect().y0-30, t:0, txt: KICK==='ck' ? 'Önce ceza sahasında hedefi seç' : 'Önce kalede hedefi seç' }); activePointer=null; return; }
+  p.aim={ mode:'pull', sx:pt.x, sy:pt.y, x:pt.x, y:pt.y };
   p.fig.go('set',.25);
-  try{ cv.setPointerCapture(e.pointerId); }catch(_){}
 });
-cv.addEventListener('pointermove', e => { if(e.pointerId!==activePointer || !court.aim) return; const pt=toLocal(e); const a=court.aim; a.x=pt.x; a.y=pt.y;
-  const l=a.path[a.path.length-1]; if(Math.hypot(pt.x-l.x, pt.y-l.y)>4){ a.path.push(pt); if(a.path.length>80) a.path.splice(1,1); } });
-// falso: parmak yolunun düz çizgiden en çok saptığı yan (yay). Sapan gibi ters çevrilir.
-function aimSpin(aim){
-  const P=aim.path; if(!P || P.length<3) return 0;
-  const ax=aim.sx, ay=aim.sy, bx=aim.x, by=aim.y, L=Math.hypot(bx-ax, by-ay); if(L<30) return 0;
-  let dev=0; for(const q of P){ const d=((bx-ax)*(q.y-ay)-(by-ay)*(q.x-ax))/L; if(Math.abs(d)>Math.abs(dev)) dev=d; }
-  const sgn = (by>=ay) ? 1 : -1;                     // aşağı çekerken sağa kıvrım → top sola döner
-  const v=Math.max(-1, Math.min(1, (Math.abs(dev)<9 ? 0 : (Math.abs(dev)-9)*Math.sign(dev)/55)));
-  return Math.round(v*sgn*SPIN_MAX[KICK]);
-}
+cv.addEventListener('pointermove', e => { if(e.pointerId!==activePointer || !court.aim) return; const pt=toLocal(e), a=court.aim;
+  if(a.mode==='target'){ if(inTargetZone(pt) || KICK!=='ck') setTargetFrom(pt); return; }
+  a.x=pt.x; a.y=pt.y; });
+function idealPull(t, D){ return Math.max(.36, Math.min(.88, .38 + .38*(t.h/GOAL.h) + .14*Math.max(0, (D-1100)/1500))); }
 function aimVelocity(aim){
-  if(!aim) return null;
-  let dx=aim.sx-aim.x, dy=aim.sy-aim.y; const len=Math.hypot(dx,dy);
-  if(len<14) return null;
-  const k=Math.min(len,MAXPULL)/len; dx*=k; dy*=k;
-  return { vx:dx*POW_X, vy:dy*POW_Y, pull:Math.min(len,MAXPULL)/MAXPULL, sp:aimSpin(aim) };
+  if(!aim || aim.mode!=='pull') return null;
+  const t=targetWorld(); if(!t) return null;
+  const fx=aim.x-aim.sx, fy=aim.y-aim.sy, len=Math.hypot(fx,fy);
+  if(len<14 || fy<4) return null;                                   // geri (aşağı) çekmek gerekir
+  const pull=Math.min(len,MAXPULL)/MAXPULL;
+  const side=fx/len, sv=Math.abs(side)<.12 ? 0 : Math.max(-1, Math.min(1, (Math.abs(side)-.12)*Math.sign(side)/.5));
+  const sp=Math.round(-sv*SPIN_MAX[KICK]);                           // sola çekersen top sağa döner (sapan gibi)
+  const D=Math.max(150, depthOf(t.x,t.z)), T=D/VZ_NOW, tl=latOf(t.x,t.z), wl=WIND*CAMF.rx;
+  const vx=(tl - .5*(sp+wl)*T*T)/T;
+  const vyI=-(t.h - BR + .5*GRAV*T*T)/T, pI=idealPull(t, D);
+  return { vx, vy:vyI*(pull/pI), pull, pI, sp };
 }
 cv.addEventListener('pointerup', e => {
   if(e.pointerId!==activePointer) return; activePointer=null;
   const p=court; if(!p.aim) return;
+  if(p.aim.mode==='target'){ p.aim=null; return; }
   const v=aimVelocity(p.aim); p.aim=null;
   if(!v || !p.canShoot()){ p.fig.go('hold',.2); return; }
   p.pending=v; p.fig.go('release',.09); p.state='releasing'; p.timer=0;
 });
 cv.addEventListener('pointercancel', e => { if(e.pointerId!==activePointer) return; activePointer=null; court.aim=null; court.fig.go('hold',.2); });
+function drawTarget(g){
+  const t=targetWorld(); if(!t || game!=='play' || botTurn()) return;
+  const q=proj(t.x, t.h, t.z), r=Math.max(9, 26*q.k), pulse=1+.08*Math.sin(performance.now()/180);
+  g.save(); g.strokeStyle='#e8590c'; g.lineWidth=3; g.globalAlpha=.95;
+  g.beginPath(); g.arc(q.x, q.y, r*pulse, 0, 7); g.stroke();
+  g.beginPath(); g.moveTo(q.x-r*1.5,q.y); g.lineTo(q.x-r*.5,q.y); g.moveTo(q.x+r*.5,q.y); g.lineTo(q.x+r*1.5,q.y);
+  g.moveTo(q.x,q.y-r*1.5); g.lineTo(q.x,q.y-r*.5); g.moveTo(q.x,q.y+r*.5); g.lineTo(q.x,q.y+r*1.5); g.stroke();
+  if(AIMT.kind==='ground'){ const gq=proj(t.x,0,t.z); g.setLineDash([4,5]); g.beginPath(); g.moveTo(q.x,q.y+r); g.lineTo(gq.x,gq.y); g.stroke(); g.setLineDash([]); }
+  g.restore();
+}
 
 // ---------- çizim ----------
 function drawAim(g, p){
   const v=aimVelocity(p.aim); if(!v) return;
   const frac= PREVIEW_OVR!=null ? PREVIEW_OVR : PREVIEW[Math.min(round,PREVIEW.length-1)];
-  const T = KICK==='ck' ? 1.5 : depthOf(GOAL.x,GOAL.z)/VZ_NOW, n=Math.max(3, Math.round(30*frac));
+  const t=targetWorld(), T = depthOf(t.x,t.z)/VZ_NOW, n=Math.max(3, Math.round(30*frac));
   const b={}; setShotVel(b, v.vx, v.vy, v.sp);
   g.fillStyle = v.sp ? '#ffe2a8' : '#fbfaf6';
   for(let i=1;i<=n;i++){
-    const t=i/30*T, x=SPOT.x+b.vx*t+.5*b.sp*b.srx*t*t+.5*WIND*t*t, y=-BR+v.vy*t+.5*GRAV*t*t, z=SPOT.z+b.vz*t+.5*b.sp*b.srz*t*t;
+    const tt=i/30*T, x=SPOT.x+b.vx*tt+.5*(b.sp*b.srx+WIND)*tt*tt, y=-BR+v.vy*tt+.5*GRAV*tt*tt, z=SPOT.z+b.vz*tt+.5*b.sp*b.srz*tt*tt;
     if(y>-BR+1 && i>2) break;
     const q=proj(x,-y,z);
     g.globalAlpha=.85*(1-i/(n+1))+.12; g.beginPath(); g.arc(q.x,q.y,Math.max(2.2, 4.2-i/n*2),0,Math.PI*2); g.fill();
   }
   g.globalAlpha=1;
-  const o=proj(SPOT.x,BR,SPOT.z);
-  g.strokeStyle='rgba(255,255,255,.55)'; g.lineWidth=4; g.lineCap='round';
-  g.beginPath(); g.arc(o.x, o.y, 50, -Math.PI*.5, -Math.PI*.5+Math.PI*2*v.pull*.75); g.stroke();
-  if(v.sp){ const f=Math.abs(v.sp)/SPIN_MAX[KICK], dir=v.sp>0?1:-1;
-    g.fillStyle='#ffe2a8'; g.font='800 20px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center';
-    g.fillText(`FALSO ${dir>0?'→':'←'} ${Math.round(f*100)}%`, o.x, o.y-70); g.textAlign='left'; }
+  // güç halkası: dolu yay = çekiş gücü. Kolay seviyelerde ideal güç çentiği görünür.
+  const o=proj(SPOT.x,BR,SPOT.z), R=52, a0=-Math.PI*.5, span=Math.PI*1.5;
+  g.lineCap='round'; g.lineWidth=7; g.strokeStyle='rgba(255,255,255,.25)';
+  g.beginPath(); g.arc(o.x, o.y, R, a0, a0+span); g.stroke();
+  const diff=v.pull/v.pI;
+  g.strokeStyle = diff>1.12 ? '#d1495b' : diff<.88 ? '#e9b949' : '#7fd17f';
+  g.beginPath(); g.arc(o.x, o.y, R, a0, a0+span*v.pull); g.stroke();
+  if(frac>=.4){ const a=a0+span*v.pI; g.strokeStyle='#fbfaf6'; g.lineWidth=3; g.beginPath(); g.moveTo(o.x+Math.cos(a)*(R-9), o.y+Math.sin(a)*(R-9)); g.lineTo(o.x+Math.cos(a)*(R+9), o.y+Math.sin(a)*(R+9)); g.stroke(); }
+  g.font='800 19px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.fillStyle='#fbfaf6';
+  g.fillText(`GÜÇ ${Math.round(v.pull*100)}%`, o.x, o.y+R+30);
+  if(v.sp){ const f=Math.abs(v.sp)/SPIN_MAX[KICK]; g.fillStyle='#ffe2a8'; g.fillText(`FALSO ${v.sp>0?'→':'←'} ${Math.round(f*100)}%`, o.x, o.y-R-16); }
+  g.textAlign='left';
 }
 function spaced(g, px){ if(g.letterSpacing!==undefined) g.letterSpacing=px; }
 function drawHUD(g){
@@ -3518,7 +3579,9 @@ if(/[?&]test\b/.test(location.search)) window.__game = { get preview(){ return P
       for(let t=0;t<240*4 && !b.fade && !b.scored && !(b.past&&!b.inNet) && !b.saved && !(b.rest>0); t++){ updateKeeper(c.keeper, STEP, c.balls); if(c.defs.length) updateDefenders(c.defs, STEP, c.balls); if(c.mates.length) updateMates(c.mates, STEP, c.balls); c.stepBall(b, STEP, false); if(b.headed) hd+=0; }
       if(b.headed) hd++; if(b.saved) sv++; else if(b.blocked) bl++; else if(!b.scored) out++; }
     KICK=keepK; camUpdate(); game='menu'; return { gol:g/n, kurtarma:sv/n, baraj:bl/n, disari:out/n, temas:hd/n }; },
-  shoot(vx,vy){ const p=court; if(!p.canShoot()) return false; p.pending={vx,vy}; p.fig.go('release',.09); p.state='releasing'; p.timer=0; return true; } };
+  aimTest(frac, side){ const t=targetWorld(); if(!t) return null; const D=depthOf(t.x,t.z), pI=idealPull(t,D), L=frac*pI*MAXPULL; return aimVelocity({ mode:'pull', sx:0, sy:0, x:(side||0)*L, y:L*Math.sqrt(1-(side||0)**2) }); },
+  setTarget(x,y){ setTargetFrom({x,y}); return AIMT; }, targetMate(i){ const m=court.mates[i]; const q=proj(m.x,170,m.z); setTargetFrom({x:q.x,y:q.y}); return AIMT; }, targetGoal(ox,h){ AIMT={kind:'goal',ox,h}; return AIMT; }, get floaters(){ return court.floaters.map(f=>f.txt); },
+  shoot(vx,vy,sp){ const p=court; if(!p.canShoot()) return false; p.pending={vx,vy,sp:sp||0}; p.fig.go('release',.09); p.state='releasing'; p.timer=0; return true; } };
 })();
 </script>
 <script>
