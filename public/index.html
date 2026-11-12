@@ -183,6 +183,7 @@
   button.mode{display:block;text-align:left;background:rgba(255,255,255,.6);color:var(--ink);border:1.5px solid var(--ink);border-radius:18px;padding:16px 18px;letter-spacing:normal;text-transform:none;font-size:15px}
   button.mode b{display:block;font-size:19px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
   button.mode small{display:block;color:var(--muted);font-weight:500;margin-top:2px;font-size:13px}
+  .mode-row{display:flex;gap:12px}.mode-row .mode{flex:1;padding:14px 14px}
   button.mode.hl{background:#26221e;color:#f8ecdc}button.mode.hl small{color:#c9bfb2}
   #ovCpu{align-items:flex-start}
   .bots{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -330,7 +331,8 @@
     <ul>
       <li><b>Tek oyuncu → Rakiple oyna:</b> Bilgisayar rakiplere karşı. <b>Hızlı maç</b>ta seviyeyi seçersin: Kolay, Orta, Zor, Efsane (zorlaştıkça kaleci de ustalaşır). Bilgisayar oyuncusunun adı her maçta değişir. <b>Bilgisayar ligi</b> 3 kademelidir (Bronz, Gümüş, Altın) ve başlarken seviye seçersin: 8 kişilik ligde herkesle 1 maç yaparsın; ilk 2 üst lige çıkar, son 2 düşer, Altın ligin birincisi şampiyon olur. <b>Turnuva</b> online turnuvalarla aynı kurallarla, eleme ya da grup usulü 8/16 kişilik oynanır. Bilgisayar her maçta <b>önce kendi 5 penaltısını</b> atar (izlerken sağ alttaki hız düğmesiyle hızlandırabilirsin); sonra sen onun skorunu geçmeye çalışırsın.</li>
       <li><b>Tek oyuncu → Online oyna:</b> <b>Hızlı maç</b>ta rastgele gerçek bir oyuncunun son skoruna karşı oynarsın; online oda ve turnuvalara da buradan geçebilirsin.</li>
-      <li><b>Tek oyuncu → Macera:</b> 2 bölüm, 25 level, en çok puan usulü. Çoğu levelde 5 top var (bazılarında 3 ya da 7) ve her levelin kendi macerası var: rüzgâr, gece, yağmur, fırtına, kayan kale, dar kale, zıplayan baraj, uzak noktalar ve sonunda patron kaleci. Puanına göre 1–3 yıldız kazanırsın; 1 yıldız sonraki leveli açar. Haritadan klasik 3 turluk <b>serbest antrenman</b> da açılabilir.</li>
+      <li><b>Tek oyuncu → Frikik / Korner:</b> 3 turluk duran top antrenmanı. Frikikte 20, 22 ve 25 metreden, önünde 3–5 kişilik zıplayan barajla vurursun. Kornerde topu ceza sahasındaki arkadaşlarının (beyaz halkalılar) kafasına bırakırsın; gri formalı savunmacıya değerse uzaklaştırılır, kaleye yakın orta kaleciye gider. Kornerden doğrudan gol (olimpik gol) <b>üç kat</b> puan.</li>
+      <li><b>Tek oyuncu → Macera:</b> 3 bölüm, 35 level (3. bölüm frikik ve korner), en çok puan usulü. Çoğu levelde 5 top var (bazılarında 3 ya da 7) ve her levelin kendi macerası var: rüzgâr, gece, yağmur, fırtına, kayan kale, dar kale, zıplayan baraj, uzak noktalar ve sonunda patron kaleci. Puanına göre 1–3 yıldız kazanırsın; 1 yıldız sonraki leveli açar. Haritadan klasik 3 turluk <b>serbest antrenman</b> da açılabilir.</li>
       <li><b>Online oda:</b> Biri <b>Oda kur</b>’a basar ve 4 harfli bir kod alır. Diğerleri kendi telefonlarında <b>Çoklu oyuncu → Katıl</b>’a bu kodu yazar. En fazla 4 kişi. Kurucu <b>Başlat</b>’a basınca 3’ten geri sayılır ve <b>herkes aynı anda</b> kendi sahasında oynar. Aynı turdaki rakiplerin şutları sahanda yarı saydam top olarak görünür.</li>
       <li><b>Aynı telefonda:</b> 2–4 kişi telefonu elden ele verir; her oyuncu 5 penaltısını bitirince sıra sonrakine geçer.</li>
       <li><b>Rakibi izle:</b> Online turnuva, lig ve hızlı maçta rakibin senden önce oynadıysa maçından önce onun penaltıları yeniden oynatılır. Rakibin <b>nişan çizgisi gizlidir</b>; yalnızca topun gidişini görürsün. Aynı maçta iki rakip aynı kaleci hareketlerine karşı oynar.</li>
@@ -403,6 +405,7 @@
       <li>Az aşağı çekmek yerden şut, çok aşağı çekmek üst direğin üstü demektir. Topun çevresindeki halka çekişi gösterir.</li>
       <li>Nişan alırken <b>noktalı yardım çizgisi</b> topun gideceği yolun başını gösterir.</li>
       <li>Çok kısa bir çekiş şut sayılmaz; parmağını kaldırınca iptal olur.</li>
+      <li><b>Falso:</b> Geri çekerken parmağını düz değil <b>yay gibi kıvırarak</b> çek. Ne kadar kıvırırsan top havada o kadar döner; yardım çizgisi sarıya döner ve topun üstünde falso yönü ile gücü yazar. Falsolu şutu kalecinin okuması zordur, frikikte barajı dolanmanın yolu da budur.</li>
     </ul>
 
     <h3>Süre ve puanlama</h3>
@@ -543,7 +546,8 @@
 <div class="ov hidden" id="ovSolo"><div class="card">
   <h2>Tek oyuncu</h2><h1>Mod seç</h1>
   <div class="modes">
-    <button class="mode hl" id="soloMacera"><b>Macera</b><small>25 level · baraj, rüzgâr, gece · yıldızlar</small></button>
+    <button class="mode hl" id="soloMacera"><b>Macera</b><small>35 level · penaltı, frikik, korner · yıldızlar</small></button>
+    <div class="mode-row"><button class="mode" id="soloFk"><b>Frikik</b><small>Baraj, falso · 3 tur</small></button><button class="mode" id="soloCk"><b>Korner</b><small>Orta aç, kafa golü · 3 tur</small></button></div>
     <button class="mode" id="soloCpu"><b>Rakiple oyna</b><small>Bilgisayara karşı: hızlı maç, 3 kademeli lig, turnuva</small></button>
     <button class="mode" id="soloOnline"><b>Online oyna</b><small>Gerçek rakipler: hızlı maç, online oda, turnuvalar</small></button>
   </div>
@@ -721,13 +725,35 @@ const CAM  = { y:200, back:640, f:1250, cx:360, hor:760 };
 const VZ = 2000;                             // ileri hız (cm/s): 11 m'de ~0,55 sn
 let GOAL_SCALE = 1;
 const GROUND = 1200;                         // HUD yerleşimi için (kalan atış satırı)
-function setCourt(r){ const [dz,dx]=DIST[Math.min(r,DIST.length-1)]; setCourtXY(dz, dx, 1); }
+function setCourt(r){
+  if(KICK==='fk'){ const [dz,dx,n]=FK_SPOTS[Math.min(r,FK_SPOTS.length-1)]; setCourtXY(dz, dx, 1); DEF_CFG=fkWall(n); return; }
+  if(KICK==='ck'){ setCourtXY(-(GOAL.z-25), (r%2 ? 1 : -1)*3380, 1); DEF_CFG=null; return; }
+  const [dz,dx]=DIST[Math.min(r,DIST.length-1)]; setCourtXY(dz, dx, 1); }
+// frikik turları: [kaleden geri (cm, 11 m'ye ek), yana, baraj kişi sayısı] → 20 m, 22 m, 25 m
+const FK_SPOTS = [[900,-650,3],[1100,750,4],[1400,0,5]];
 // dz: vuruş noktası kaleden ne kadar uzak (cm, +), dx: yana kayma (cm), gs: kale genişliği çarpanı
-function setCourtXY(dz, dx, gs){ SPOT.z=-(dz||0); SPOT.x=dx||0; GOAL_SCALE=gs||1; GOAL.w=732*GOAL_SCALE; }
-const camX = () => SPOT.x*.55;
+function setCourtXY(dz, dx, gs){ SPOT.z=-(dz||0); SPOT.x=dx||0; GOAL_SCALE=gs||1; GOAL.w=732*GOAL_SCALE; camUpdate(); }
+// vuruş türü: 'pen' penaltı, 'fk' frikik (serbest vuruş), 'ck' korner
+let KICK='pen', VZ_NOW=VZ, CK_EXTRA=false;
+const KICK_NAME = { pen:'Penaltı', fk:'Frikik', ck:'Korner' };
+const SPIN_MAX = { pen:620, fk:430, ck:400 };
+// kamera çerçevesi: f ileri (vuruş yönü), r sağ. Penaltıda dümdüz kaleye bakar (eski görünüm).
+const CAMF = { fx:0, fz:1, rx:1, rz:0, lat:0 };
+function camUpdate(){
+  VZ_NOW = KICK==='fk' ? 1750 : KICK==='ck' ? 1850 : VZ;
+  CAM.f = KICK==='ck' ? 1700 : 1250; CAM.back = KICK==='ck' ? 820 : 640;
+  if(KICK==='pen'){ CAMF.fx=0; CAMF.fz=1; CAMF.rx=1; CAMF.rz=0; CAMF.lat=SPOT.x*.45; return; }
+  const tx = KICK==='ck' ? Math.sign(SPOT.x)*60 : 0, tz = KICK==='ck' ? GOAL.z-330 : GOAL.z;
+  const th=Math.atan2(tx-SPOT.x, tz-SPOT.z);
+  CAMF.fx=Math.sin(th); CAMF.fz=Math.cos(th); CAMF.rx=Math.cos(th); CAMF.rz=-Math.sin(th); CAMF.lat=0;
+}
+const depthOf = (x,z) => (x-SPOT.x)*CAMF.fx + (z-SPOT.z)*CAMF.fz;
+const latOf   = (x,z) => (x-SPOT.x)*CAMF.rx + (z-SPOT.z)*CAMF.rz;
+// kamera çerçevesindeki (yan, yükseklik, ileri) noktayı dünyaya çevir
+const camPt = (l, d) => ({ x:SPOT.x + CAMF.rx*l + CAMF.fx*d, z:SPOT.z + CAMF.rz*l + CAMF.fz*d });
 function proj(x, h, z){
-  const d=Math.max(25, z-(SPOT.z-CAM.back)), k=CAM.f/d;
-  return { x:CAM.cx + (x-camX())*k, y:CAM.hor - (h-CAM.y)*k, k };
+  const d=Math.max(25, depthOf(x,z)+CAM.back), k=CAM.f/d;
+  return { x:CAM.cx + (latOf(x,z)+CAMF.lat)*k, y:CAM.hor - (h-CAM.y)*k, k };
 }
 const goalTop = () => proj(GOAL.x, GOAL.h+60, GOAL.z);
 
@@ -775,21 +801,120 @@ function drawScene(g){
   g.fillStyle='rgba(255,255,255,.75)'; g.font='800 9px ui-sans-serif,system-ui,sans-serif';
   for(let x=10;x<W;x+=120) g.fillText('TOP KALEDE', x, hor-5);
   // çim: perspektifli şeritler
-  const fz=GOAL.z+900;
-  for(let i=0;i<14;i++){
-    const z1=SPOT.z-CAM.back+30+i*140, z2=z1+140; if(z1>fz) break;
-    const a=proj(0,0,z1), b=proj(0,0,Math.min(z2,fz));
+  const fd = KICK==='pen' ? GOAL.z+900-SPOT.z : 6000, P0=(d)=>{ const w=camPt(0,d); return proj(w.x,0,w.z); };
+  const far=P0(fd); g.fillStyle=SKY.grass||'#68a853'; g.fillRect(-20, far.y, W+40, CAM.hor-far.y+1);
+  for(let i=0, d1=-CAM.back+30; i<60 && d1<fd; i++){
+    const st=KICK==='pen' ? 140 : 220*(1+i*.06), d2=d1+st;
+    const a=P0(d1), b=P0(Math.min(d2,fd));
     g.fillStyle= i%2 ? (SKY.grass2||'#5e9e4a') : (SKY.grass||'#68a853'); g.fillRect(-20, b.y, W+40, a.y-b.y+1);
+    d1=d2;
   }
-  const far=proj(0,0,fz); g.fillStyle=SKY.grass||'#68a853'; g.fillRect(-20, far.y, W+40, CAM.hor-far.y+1);
   // çizgiler: kale çizgisi, kale alanı, penaltı noktası
   g.strokeStyle='rgba(255,255,255,.85)'; g.lineWidth=2.4;
   const L=(x1,z1,x2,z2)=>{ const p=proj(x1,0,z1), q=proj(x2,0,z2); g.beginPath(); g.moveTo(p.x,p.y); g.lineTo(q.x,q.y); g.stroke(); };
-  L(-2600,GOAL.z, 2600,GOAL.z);
+  L(-3400,GOAL.z, 3400,GOAL.z);
+  if(KICK!=='pen'){ L(-3400,GOAL.z, -3400,GOAL.z-5200); L(3400,GOAL.z, 3400,GOAL.z-5200);
+    const ar=(cx)=>{ g.beginPath(); for(let i=0;i<=8;i++){ const t=i/8*Math.PI/2, q=proj(cx-Math.sign(cx)*Math.sin(t)*100,0,GOAL.z-Math.cos(t)*100); i?g.lineTo(q.x,q.y):g.moveTo(q.x,q.y); } g.stroke(); };
+    ar(-3400); ar(3400);
+    const pa=proj(GOAL.x,0,GOAL.z-1100); g.fillStyle='rgba(255,255,255,.9)'; g.beginPath(); g.ellipse(pa.x,pa.y,10*pa.k,3.5*pa.k,0,0,7); g.fill();
+    if(KICK==='ck') for(const fx of [SPOT.x<0 ? 3400 : -3400]){ const a=proj(fx,0,GOAL.z), b=proj(fx,150,GOAL.z); g.strokeStyle='#26221e'; g.lineWidth=Math.max(1.5,2.5*a.k); g.beginPath(); g.moveTo(a.x,a.y); g.lineTo(b.x,b.y); g.stroke();
+      g.fillStyle='#e8590c'; g.beginPath(); g.moveTo(b.x,b.y); g.lineTo(b.x+30*b.k*Math.sign(fx)*-1,b.y+10*b.k); g.lineTo(b.x,b.y+22*b.k); g.fill(); g.strokeStyle='rgba(255,255,255,.85)'; g.lineWidth=2.4; }
+  }
   const ga=916, gz=GOAL.z-550; L(GOAL.x-ga,GOAL.z, GOAL.x-ga,gz); L(GOAL.x+ga,GOAL.z, GOAL.x+ga,gz); L(GOAL.x-ga,gz, GOAL.x+ga,gz);
   const pa=2016, pz=GOAL.z-1650; L(GOAL.x-pa,GOAL.z, GOAL.x-pa,pz); L(GOAL.x+pa,GOAL.z, GOAL.x+pa,pz);
   const sp=proj(SPOT.x,0,SPOT.z); g.fillStyle='rgba(255,255,255,.9)'; g.beginPath(); g.ellipse(sp.x, sp.y+2, 13*sp.k, 4.5*sp.k, 0, 0, Math.PI*2); g.fill();
 }
+// ---------- insan figürleri (şutçu, kaleci, baraj, takım arkadaşları) ----------
+const SKINS = ['#e3b48f','#c98f66','#f0c9a6','#a86e4b','#d9a37c'];
+const HAIRS = ['#2b1d16','#4a2f1f','#1b1716','#6b4a2e','#8a6239'];
+// konik uzuv: a→b, uç genişlikleri wa/wb (piksel)
+function limb(g, a, b, wa, wb, col){
+  const dx=b.x-a.x, dy=b.y-a.y, L=Math.hypot(dx,dy)||1, nx=-dy/L, ny=dx/L;
+  g.fillStyle=col; g.beginPath();
+  g.moveTo(a.x+nx*wa, a.y+ny*wa); g.lineTo(b.x+nx*wb, b.y+ny*wb);
+  g.arc(b.x, b.y, wb, Math.atan2(ny,nx), Math.atan2(ny,nx)+Math.PI, false);
+  g.lineTo(a.x-nx*wa, a.y-ny*wa);
+  g.arc(a.x, a.y, wa, Math.atan2(-ny,-nx), Math.atan2(-ny,-nx)+Math.PI, false);
+  g.closePath(); g.fill();
+}
+const mix = (a,b,t) => ({ x:a.x+(b.x-a.x)*t, y:a.y+(b.y-a.y)*t, k:(a.k||0)+((b.k||0)-(a.k||0))*t });
+// J: izdüşürülmüş eklemler (x,y,k). s: renkler ve görünüş (back: arkadan)
+function drawBody(g, J, s){
+  const k=J.hip.k, w=v=>Math.max(1.2, v*k), out='rgba(30,24,20,.28)';
+  g.save(); g.lineJoin='round'; g.lineCap='round';
+  const skin=s.skin||SKINS[0], sock=s.socks||'#fbfaf6', boot=s.boots||'#1d1b1a', sh=s.shorts||'#fbfaf6';
+  // bacaklar (uzaktaki önce)
+  const legs = [['L',J.hipL,J.knL,J.anL,J.toL],['R',J.hipR,J.knR,J.anR,J.toR]].sort((a,b)=>a[3].k-b[3].k);
+  for(const [,hp,kn,an,to] of legs){
+    limb(g, hp, kn, w(8), w(6), skin);
+    limb(g, kn, an, w(5.8), w(3.8), sock);
+    limb(g, mix(kn,an,.06), mix(kn,an,.2), w(6), w(5.6), shade(sock,-.12));        // tozluk bandı
+    limb(g, an, to, w(4.4), w(3.4), boot);
+    limb(g, hp, mix(hp,kn,.45), w(9.6), w(8.4), sh);                                 // şort paçası
+  }
+  // şort gövdesi
+  g.fillStyle=sh; g.beginPath(); const qL=mix(J.hipL,J.knL,.3), qR=mix(J.hipR,J.knR,.3);
+  g.moveTo(J.hipL.x-w(6), J.hipL.y-w(4)); g.lineTo(J.hipR.x+w(6), J.hipR.y-w(4)); g.lineTo(qR.x+w(6), qR.y); g.lineTo(qL.x-w(6), qL.y); g.closePath(); g.fill();
+  // gövde (forma)
+  const shL=J.shL, shR=J.shR, hL=mix(J.hipL,J.shL,.08), hR=mix(J.hipR,J.shR,.08);
+  const gr=g.createLinearGradient(shL.x, shL.y, shR.x, shR.y);
+  gr.addColorStop(0, shade(s.jersey,-.05)); gr.addColorStop(.55, s.jersey); gr.addColorStop(1, shade(s.jersey,-.2));
+  g.fillStyle=gr; g.strokeStyle=out; g.lineWidth=Math.max(1,.6*k);
+  g.beginPath();
+  g.moveTo(shL.x-w(5), shL.y+w(3));
+  g.quadraticCurveTo(J.neck.x, J.neck.y-w(4), shR.x+w(5), shR.y+w(3));
+  g.quadraticCurveTo(shR.x+w(3)+(hR.x-shR.x)*.5, (shR.y+hR.y)/2, hR.x+w(5), hR.y);
+  g.lineTo(hL.x-w(5), hL.y);
+  g.quadraticCurveTo(shL.x-w(3)+(hL.x-shL.x)*.5, (shL.y+hL.y)/2, shL.x-w(5), shL.y+w(3));
+  g.closePath(); g.fill(); g.stroke();
+  if(s.back && s.num){ const c=mix(mix(shL,shR,.5), mix(J.hipL,J.hipR,.5), .42);
+    g.fillStyle='rgba(255,255,255,.93)'; g.font=`800 ${Math.round(w(19))}px ui-sans-serif,system-ui,sans-serif`; g.textAlign='center'; g.textBaseline='middle';
+    g.fillText(s.num, c.x, c.y); g.textBaseline='alphabetic'; g.textAlign='left'; }
+  if(!s.back){ g.fillStyle='rgba(255,255,255,.55)'; const c=mix(shR,J.hipR,.18); g.beginPath(); g.arc(c.x-w(5), c.y, w(2.6), 0, 7); g.fill(); }  // arma
+  // boyun
+  limb(g, J.neck, mix(J.neck,J.head,.55), w(4.6), w(4.6), skin);
+  if(!s.back){ g.fillStyle=shade(s.jersey,-.25); g.beginPath(); g.ellipse(J.neck.x, J.neck.y+w(1), w(5.5), w(2.4), 0, 0, Math.PI); g.fill(); }
+  // kollar
+  const arms=[[shL,J.elL,J.haL],[shR,J.elR,J.haR]];
+  for(const [a,e,h] of arms){
+    const sleeveLong = !!s.longSleeve;
+    limb(g, a, e, w(5), w(4.2), sleeveLong ? s.jersey : skin);
+    if(!sleeveLong) limb(g, a, mix(a,e,.5), w(5.8), w(5.2), s.jersey);
+    limb(g, e, h, w(4.2), w(3.2), sleeveLong ? s.jersey : skin);
+    g.fillStyle = s.gloves || skin; g.beginPath(); g.arc(h.x, h.y, w(s.gloves?6:4.2), 0, 7); g.fill();
+  }
+  // kafa
+  const H=J.head, rx=w(10.5), ry=w(12.5);
+  g.fillStyle=skin; g.beginPath(); g.ellipse(H.x, H.y, rx, ry, 0, 0, 7); g.fill();
+  g.beginPath(); g.ellipse(H.x-rx*.98, H.y+ry*.08, w(2.4), w(3.4), 0, 0, 7); g.ellipse(H.x+rx*.98, H.y+ry*.08, w(2.4), w(3.4), 0, 0, 7); g.fill();   // kulaklar
+  g.fillStyle=s.hair||HAIRS[0];
+  if(s.back){ g.beginPath(); g.ellipse(H.x, H.y-ry*.12, rx*1.02, ry*.92, 0, 0, 7); g.fill(); }
+  else {
+    g.beginPath(); g.ellipse(H.x, H.y-ry*.45, rx*1.03, ry*.62, 0, Math.PI, Math.PI*2); g.fill();
+    g.beginPath(); g.ellipse(H.x, H.y-ry*.42, rx*1.03, ry*.2, 0, 0, Math.PI); g.fill();
+    if(k>.18){ g.fillStyle='rgba(30,22,18,.75)'; g.beginPath(); g.arc(H.x-rx*.36, H.y+ry*.02, Math.max(.8,w(1.3)), 0, 7); g.arc(H.x+rx*.36, H.y+ry*.02, Math.max(.8,w(1.3)), 0, 7); g.fill();
+      g.strokeStyle='rgba(120,60,40,.5)'; g.lineWidth=Math.max(.8,w(1)); g.beginPath(); g.moveTo(H.x-rx*.25, H.y+ry*.45); g.quadraticCurveTo(H.x, H.y+ry*.55, H.x+rx*.25, H.y+ry*.45); g.stroke(); }
+  }
+  g.restore();
+}
+// kameraya bakan figür: dünya (wx,wz) noktasında, lift cm havada. Yan eksen kameranın sağı.
+const FPOSE = {
+  stand:   { el:[-25,112], ha:[-24,86],  kn:[-11,47], an:[-12,8] },
+  wall:    { el:[-17,104], ha:[ -5,84],  kn:[-10,47], an:[-12,8] },
+  wallJump:{ el:[-20,112], ha:[ -6,92],  kn:[-12,42], an:[-11,14] },
+  jump:    { el:[-26,168], ha:[-18,196], kn:[-12,40], an:[-9,14] },
+  ready:   { el:[-34,110], ha:[-44,96],  kn:[-17,45], an:[-20,8] },
+};
+function drawPersonFront(g, wx, wz, lift, s){
+  const F=FPOSE[s.pose]||FPOSE.stand, sc=(s.h||182)/182;
+  const P=(l,h,d=0)=>{ const x=wx+CAMF.rx*l-CAMF.fx*d, z=wz+CAMF.rz*l-CAMF.fz*d; return proj(x, lift+h*sc, z); };
+  const J={ hip:P(0,92), hipL:P(-10,94), hipR:P(10,94), shL:P(-20,146), shR:P(20,146), neck:P(0,150), head:P(0,170),
+    elL:P(F.el[0],F.el[1]), elR:P(-F.el[0],F.el[1]), haL:P(F.ha[0],F.ha[1]), haR:P(-F.ha[0],F.ha[1]),
+    knL:P(F.kn[0],F.kn[1],4), knR:P(-F.kn[0],F.kn[1],4), anL:P(F.an[0],F.an[1]), anR:P(-F.an[0],F.an[1]),
+    toL:P(F.an[0]-1,F.an[1]-6,14), toR:P(-F.an[0]+1,F.an[1]-6,14) };
+  drawBody(g, J, s);
+}
+
 function drawGoal(g, front){
   const gx=GOAL.x, hw=GOAL.w/2, z=GOAL.z, zb=z+GOAL.depth;
   const P=(x,h,zz)=>proj(x,h,zz);
@@ -814,11 +939,11 @@ function drawGoal(g, front){
 // Şutta topun kaleci hizasından geçeceği noktayı hesaplar ve oraya uzanır. Tepki, sezgiyle yanlış köşeye
 // atlama ve hata payı topun sıra numarasından türetilen belirlenimci sayılarla seçilir (online tekrar izleme aynı).
 const KEEPER_LV = [
-  { n:'Acemi', reach:200, react:.5,  delay:.2,  dur:.36, err:1.05, guess:.45 },
-  { n:'Orta',  reach:222, react:.6,  delay:.15, dur:.32, err:.9, guess:.38 },
-  { n:'İyi',   reach:245, react:.7,  delay:.11, dur:.29, err:.8, guess:.3  },
-  { n:'Usta',  reach:265, react:.78, delay:.08, dur:.26, err:.65,  guess:.24 } ];
-const KEEPER_BOSS = { n:'Efsane', reach:282, react:.84, delay:.06, dur:.24, err:.55, guess:.2 };
+  { n:'Acemi', reach:200, react:.5,  delay:.2,  dur:.36, err:1.05, guess:.45 , spin:0 },
+  { n:'Orta',  reach:222, react:.6,  delay:.15, dur:.32, err:.9, guess:.38 , spin:.2 },
+  { n:'İyi',   reach:245, react:.7,  delay:.11, dur:.29, err:.8, guess:.3  , spin:.4 },
+  { n:'Usta',  reach:265, react:.78, delay:.08, dur:.26, err:.65,  guess:.24 , spin:.55 } ];
+const KEEPER_BOSS = { n:'Efsane', reach:282, react:.84, delay:.06, dur:.24, err:.55, guess:.2 , spin:.7 };
 const KEEPER_NAMES = KEEPER_LV.map(k=>k.n);
 const KZ = () => GOAL.z-30;
 function hrand(a, b){ let h = (Math.imul(a|0, 374761393) + Math.imul(b|0, 668265263)) | 0;
@@ -831,14 +956,16 @@ function keeperLevelNow(){
   if(MODE==='match' || game==='replay') return Math.max(0, Math.min(3, DEF_N||0));
   return Math.min(2, round);
 }
-function makeKeeper(){ const boss = MODE==='level' && KEEPER_IS_BOSS, P = boss ? KEEPER_BOSS : KEEPER_LV[keeperLevelNow()];
+function keeperRest(){ return KICK==='fk' ? Math.max(-110, Math.min(110, (SPOT.x-GOAL.x)*.09)) : 0; }
+function makeKeeper(){ const boss = MODE==='level' && KEEPER_IS_BOSS, P0 = boss ? KEEPER_BOSS : KEEPER_LV[keeperLevelNow()];
+  const P = KICK==='fk' ? { ...P0, reach:P0.reach*1.12, react:Math.min(.95,P0.react+.08) } : P0;
   return { P, boss, x:GOAL.x, t:0, dive:null, seen:{}, hand:{x:GOAL.x,h:205}, hip:{x:GOAL.x,h:95}, head:{x:GOAL.x,h:175}, feet:{x:GOAL.x,h:0}, p:0 }; }
 function keeperWatch(K, balls){
   if(K.dive) return;
   for(const b of balls){
     if(b.fade || !b.sid || K.seen[b.sid] || b.vz<=0 || b.z>=KZ()) continue;
     K.seen[b.sid]=true;
-    const t=(KZ()-b.z)/b.vz, xc=b.x+b.vx*t+.5*WIND*t*t, hc=-(b.y+b.vy*t+.5*GRAV*t*t);
+    const t=(KZ()-b.z)/b.vz, xc=b.x+b.vx*t+.5*WIND*t*t+.5*(b.sp||0)*(b.srx||0)*t*t*(K.P.spin||0), hc=-(b.y+b.vy*t+.5*GRAV*t*t);
     const r1=hrand(b.sid*7+3, 11), r2=hrand(b.sid*13+5, 23), r3=hrand(b.sid*17+9, 37), r4=hrand(b.sid*19+1, 41), P=K.P;
     let tx, th;
     if(r1 < P.guess){ const side = r2<.5 ? -1 : 1; tx=GOAL.x+side*(GOAL.w*.22+r3*GOAL.w*.2); th=40+r4*150; }      // önceden bir köşe seçti
@@ -854,9 +981,9 @@ function updateKeeper(K, dt, balls){
   let x=K.x, p=0;
   if(K.dive){
     const D=K.dive; D.t+=dt; p=Math.max(0, Math.min(1, (D.t-D.start)/D.dur)); p=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
-    x = D.x0 + Math.max(-140, Math.min(140, D.tx-D.x0))*p*.8;                                          // yana adım
+    const sl = KICK==='fk' ? 210 : 140; x = D.x0 + Math.max(-sl, Math.min(sl, D.tx-D.x0))*p*.8;                                          // yana adım
     if(D.t > D.start+D.dur+1.1){ K.dive=null; }
-  } else x = GOAL.x + Math.sin(K.t*1.7)*24;                                                          // çizgide yaylanma
+  } else x = GOAL.x + keeperRest() + Math.sin(K.t*1.7)*24;                                                          // çizgide yaylanma
   K.x=x; K.p=p;
   const hip={ x, h:95 - 40*p }, P=K.P;
   let dx=0, dh=105;
@@ -875,35 +1002,45 @@ function keeperHit(K, b){
   return segDist(b.x,h, K.feet.x,K.feet.h, K.head.x,K.head.h) < 26+BR || segDist(b.x,h, K.hip.x,K.hip.h, K.hand.x,K.hand.h) < 17+BR;
 }
 function drawKeeper(g, K){
-  const z=KZ(), P=(x,h)=>proj(x,h,z), k=P(K.hip.x,K.hip.h).k;
-  const feet=P(K.feet.x,K.feet.h), hip=P(K.hip.x,K.hip.h), head=P(K.head.x,K.head.h), hand=P(K.hand.x,K.hand.h);
+  const z=KZ(), P=(x,h,dz=0)=>proj(x,h,z-dz);
+  const hip=K.hip, head=K.head, hand=K.hand, feet=K.feet;
+  let ux=head.x-hip.x, uh=head.h-hip.h; const ul=Math.hypot(ux,uh)||1; ux/=ul; uh/=ul;
+  const nx=uh, nh=-ux;                                                     // gövdeye dik
+  const neck={ x:hip.x+ux*56, h:hip.h+uh*56 };
+  let ax=hand.x-neck.x, ah=hand.h-neck.h; const al=Math.hypot(ax,ah)||1; const anx=ah/al, anh=-ax/al;
+  const sh=s=>({ x:neck.x-ux*4+nx*21*s, h:neck.h-uh*4+nh*21*s });
+  const hd=s=>({ x:hand.x+anx*11*s, h:hand.h+anh*11*s });
+  const el=s=>{ const a=sh(s), b=hd(s); return { x:(a.x+b.x)/2+nx*7*s, h:(a.h+b.h)/2+nh*7*s }; };
+  const spread=1-K.p*.35;
+  const hp=s=>({ x:hip.x+nx*10*s, h:hip.h+nh*10*s });
+  const an=s=>({ x:feet.x+nx*17*s*spread, h:Math.max(feet.h+nh*17*s*spread, 0)+(K.p>.2?0:8) });
+  const kn=s=>{ const a=hp(s), b=an(s); return { x:(a.x+b.x)/2+nx*9*s, h:(a.h+b.h)/2+nh*9*s+4 }; };
+  const Q=(p,dz=0)=>P(p.x,p.h,dz);
+  const J={ hip:Q(hip), hipL:Q(hp(-1)), hipR:Q(hp(1)), knL:Q(kn(-1),6), knR:Q(kn(1),6), anL:Q(an(-1)), anR:Q(an(1)),
+    toL:Q({x:an(-1).x, h:an(-1).h-4},14), toR:Q({x:an(1).x, h:an(1).h-4},14),
+    neck:Q(neck), shL:Q(sh(-1)), shR:Q(sh(1)), elL:Q(el(-1),4), elR:Q(el(1),4), haL:Q(hd(-1),6), haR:Q(hd(1),6), head:Q(head) };
   const jersey = K.boss ? '#b03a2e' : '#f2c14e';
-  g.lineCap='round'; g.strokeStyle='#26221e'; g.lineWidth=Math.max(3,20*k);
-  g.beginPath(); g.moveTo(feet.x-8*k*10,feet.y); g.lineTo(hip.x,hip.y); g.lineTo(feet.x+8*k*10,feet.y); g.stroke();   // bacaklar
-  g.strokeStyle=jersey; g.lineWidth=Math.max(5,44*k);
-  g.beginPath(); g.moveTo(hip.x,hip.y); g.lineTo(head.x+(hip.x-head.x)*.25, head.y+(hip.y-head.y)*.25); g.stroke();  // gövde
-  g.lineWidth=Math.max(3,16*k);
-  const sh={ x:hip.x+(head.x-hip.x)*.7, y:hip.y+(head.y-hip.y)*.7 };
-  for(const s of [-1,1]){ const hx=hand.x+s*9*k*10*(1-K.p), hy=hand.y; g.beginPath(); g.moveTo(sh.x,sh.y); g.lineTo(hx,hy); g.stroke();
-    g.fillStyle='#e8590c'; g.beginPath(); g.arc(hx,hy,Math.max(3,13*k),0,Math.PI*2); g.fill(); }                        // eldivenler
-  g.fillStyle='#e0b48f'; g.beginPath(); g.arc(head.x,head.y,Math.max(4,17*k),0,Math.PI*2); g.fill();
-  if(K.boss){ g.fillStyle='#b03a2e'; g.font='800 13px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.fillText('PATRON', head.x, head.y-24*k*2); g.textAlign='left'; }
+  drawBody(g, J, { jersey, shorts:'#26221e', socks:jersey, skin:K.boss?'#a86e4b':'#e3b48f', hair:'#1b1716', gloves:'#e8590c', longSleeve:true });
+  if(K.boss){ const t=Q({x:head.x, h:head.h+32}); g.fillStyle='#b03a2e'; g.font='800 13px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center'; g.fillText('PATRON', t.x, t.y); g.textAlign='left'; }
 }
-
-// ---------- baraj (Macera serbest vuruşları) ----------
 const DEF_JERSEY = '#4a4e57';
 const WALL_JUMP = 48, WALL_REACT = .8;
-function wallZ(){ return SPOT.z+915; }
+const WALL_D = 915;                                   // baraj topa 9,15 m uzakta, vuruş yönüne dik
+function wallZ(){ return camPt(0, WALL_D).z; }
 function makeDefenders(){ return []; }
+// c.l: kamera çerçevesinde yan konum (cm). Eski levellerde c.x dünya x'idir; çevrilir.
 function makeDefendersCfg(list){
-  return (list||[]).map((c,i)=>({ x:c.x, baseX:c.x, move:c.move||0, sp:c.sp||1, boss:!!c.boss, i, t:RNG()*1.2, jy:0, jt:-1, wait:-1, seen:{}, h:c.boss?192:182 }));
+  return (list||[]).map((c,i)=>{ const l = c.l!=null ? c.l : c.x-SPOT.x-CAMF.lat*0;
+    return { l, baseL:l, move:c.move||0, sp:c.sp||1, boss:!!c.boss, i, t:RNG()*1.2, jy:0, jt:-1, wait:-1, seen:{}, h:c.boss?192:182, tone:i%3 }; });
 }
+function defPos(d){ return camPt(d.l, WALL_D); }
 function updateDefenders(defs, dt, balls){
   for(const d of defs){
-    d.t+=dt; if(d.move) d.x=d.baseX+Math.sin(d.t*d.sp)*d.move;
+    d.t+=dt; if(d.move) d.l=d.baseL+Math.sin(d.t*d.sp)*d.move;
     if(balls && d.jt<0 && d.wait<0) for(const b of balls){
-      if(b.fade || !b.sid || d.seen[b.sid] || b.vz<=0 || b.z>=wallZ()) continue; d.seen[b.sid]=true;
-      const t=(wallZ()-b.z)/b.vz, hc=-(b.y+b.vy*t+.5*GRAV*t*t);
+      const dep=depthOf(b.x,b.z), vd=b.vx*CAMF.fx+b.vz*CAMF.fz;
+      if(b.fade || !b.sid || d.seen[b.sid] || vd<=0 || dep>=WALL_D) continue; d.seen[b.sid]=true;
+      const t=(WALL_D-dep)/vd, hc=-(b.y+b.vy*t+.5*GRAV*t*t);
       if(hc<d.h-30 || hc>d.h+WALL_JUMP+60) continue;
       if(hrand(b.sid*7+3, d.i+51) > (d.boss?.95:WALL_REACT)) continue;
       d.wait=Math.max(0, t-.22); break;
@@ -912,16 +1049,19 @@ function updateDefenders(defs, dt, balls){
     if(d.jt>=0){ d.jt+=dt; if(d.jt>=.45){ d.jt=-1; d.jy=0; } else d.jy=Math.sin(Math.PI*d.jt/.45)*WALL_JUMP; }
   }
 }
-function defendersHit(defs, b){ const h=-b.y; for(const d of defs){ if(Math.abs(b.x-d.x)<26+BR && h<d.h+d.jy+BR && h>d.jy-BR) return d; } return null; }
+function defendersHit(defs, b){ const h=-b.y, l=latOf(b.x,b.z); for(const d of defs){ if(Math.abs(l-d.l)<24+BR && h<d.h+d.jy+BR && h>d.jy-BR) return d; } return null; }
+// frikikte barajı yakın direği kapatacak şekilde diz
+function fkWall(n){
+  const post = GOAL.x + (SPOT.x<=GOAL.x ? -1 : 1)*GOAL.w/2, D=depthOf(GOAL.x,GOAL.z);
+  const lp = latOf(post, GOAL.z)*WALL_D/D, dir = lp<0 ? 1 : -1, out=[];
+  for(let i=0;i<n;i++) out.push({ l: lp - dir*28 + dir*i*50 });
+  return out;
+}
 function drawWall(g, defs){
-  const z=wallZ();
-  for(const d of [...defs].sort((a,b)=>Math.abs(b.x-SPOT.x)-Math.abs(a.x-SPOT.x))){
-    const f=proj(d.x, d.jy, z), hd=proj(d.x, d.jy+d.h-14, z), k=f.k;
-    g.lineCap='round'; g.strokeStyle='#26221e'; g.lineWidth=Math.max(3,15*k);
-    g.beginPath(); g.moveTo(f.x-8*k*7,f.y); g.lineTo(f.x, f.y-(f.y-hd.y)*.45); g.lineTo(f.x+8*k*7,f.y); g.stroke();
-    g.strokeStyle=d.boss?'#b03a2e':DEF_JERSEY; g.lineWidth=Math.max(5,44*k);
-    g.beginPath(); g.moveTo(f.x, f.y-(f.y-hd.y)*.45); g.lineTo(hd.x, hd.y+16*k*2); g.stroke();
-    g.fillStyle='#e0b48f'; g.beginPath(); g.arc(hd.x,hd.y,Math.max(4,15*k),0,Math.PI*2); g.fill();
+  for(const d of [...defs].sort((a,b)=>Math.abs(b.l)-Math.abs(a.l))){
+    const P=defPos(d), jump=d.jy>4;
+    drawPersonFront(g, P.x, P.z, d.jy, { jersey:d.boss?'#b03a2e':DEF_JERSEY, shorts:'#26221e', socks:d.boss?'#b03a2e':DEF_JERSEY,
+      skin:SKINS[(d.i+1)%SKINS.length], hair:HAIRS[d.i%HAIRS.length], pose: jump ? 'wallJump' : 'wall', h:d.h });
   }
 }
 
@@ -937,29 +1077,84 @@ class Kicker {
     for(const k in this.to) o[k]=(this.from[k]||0)+((this.to[k]||0)-(this.from[k]||0))*e; this.pose=o; }
   hand(){ const p=proj(SPOT.x,BR,SPOT.z); return { x:p.x, y:p.y }; }
   draw(g){
-    // vücut ölçüleri cm; her eklem ayrı izdüşürülür (arkadan görünüm)
-    const P=this.pose, x=SPOT.x-62-P.off*30, z=SPOT.z-55-P.off*70, sit=P.sit, lean=P.lean;
-    const J=(dx,h,dz)=>proj(x+dx, h, z+dz);
-    const hipH=95-40*sit, shH=150-42*sit;
-    const hip=J(0,hipH,0), sh=J(4+lean*6,shH,lean*18), head=J(6+lean*8,shH+22,lean*22);
-    const lFoot=sit>.5 ? J(-10,0,40) : J(-14,0,0), lKnee=J(-10,(hipH)/2+4*sit,sit*30);
-    const kick=P.kick, rFoot=J(28+kick*24, 6+kick*26, kick*95), rKnee=J(16+kick*12, 52+kick*14, kick*48);
-    const k=hip.k, W_=v=>Math.max(2, v*k);
-    g.lineCap='round'; g.lineJoin='round';
-    g.strokeStyle='#26221e'; g.lineWidth=W_(13);
-    g.beginPath(); g.moveTo(lFoot.x,lFoot.y); g.lineTo(lKnee.x,lKnee.y); g.lineTo(hip.x-W_(7),hip.y); g.stroke();
-    g.beginPath(); g.moveTo(rFoot.x,rFoot.y); g.lineTo(rKnee.x,rKnee.y); g.lineTo(hip.x+W_(7),hip.y); g.stroke();
-    g.fillStyle='#fbfaf6'; g.beginPath(); g.roundRect ? g.roundRect(hip.x-W_(20),hip.y-W_(10),W_(40),W_(22),W_(5)) : g.rect(hip.x-W_(20),hip.y-W_(10),W_(40),W_(22)); g.fill();   // şort
-    g.strokeStyle=this.jersey; g.lineWidth=W_(36); g.beginPath(); g.moveTo(hip.x,hip.y-W_(14)); g.lineTo(sh.x,sh.y); g.stroke();                              // forma (sırt)
-    g.fillStyle='rgba(255,255,255,.92)'; g.font=`800 ${Math.round(W_(20))}px ui-sans-serif,system-ui,sans-serif`; g.textAlign='center';
-    g.fillText('10', (hip.x+sh.x)/2, (hip.y+sh.y)/2+W_(5)); g.textAlign='left';
-    g.strokeStyle='#e0b48f'; g.lineWidth=W_(8);
-    for(const s of [-1,1]){ const hand=J(s*(30+kick*16)+4, 108+kick*14-36*sit, s*kick*10); g.beginPath(); g.moveTo(sh.x+s*W_(15), sh.y+W_(4)); g.lineTo(hand.x,hand.y); g.stroke(); }
-    g.fillStyle='#3a2a20'; g.beginPath(); g.arc(head.x,head.y,W_(11),0,Math.PI*2); g.fill();
+    // arkadan görünüm: eklemler kamera çerçevesinde (yan, yükseklik, ileri) cm
+    const P=this.pose, sit=P.sit, lean=P.lean, kick=P.kick, back=Math.min(1, lean*2.4)*(1-kick);
+    const x0=-62-P.off*30, z0=-55-P.off*70, br=Math.sin(this.breath*2.2)*.7, mir = KICK==='ck' ? -1 : 1;
+    const J3=(l,h,d)=>{ const w=camPt(mir*(x0+l), z0+d); return proj(w.x, h, w.z); };
+    const L=(a,b,t)=>a+(b-a)*t;
+    const hipH=92-38*sit, shH=146-38*sit+br;
+    // sağ (vuran) bacak: dur → geri çekiş → vuruş
+    const anR = kick>0 ? [L(14,42,kick), L(9,34,kick), L(0,96,kick)] : [14, 9+back*42, -back*38];
+    const knR = kick>0 ? [L(12,26,kick), L(48,64,kick), L(4,54,kick)] : [13, 48+back*8, 4-back*6];
+    const toR = [anR[0]+1, anR[1]-4+kick*8, anR[2]+15];
+    const J={
+      hip:J3(0,hipH,lean*4), hipL:J3(-10,hipH,0), hipR:J3(10,hipH,0),
+      knL:J3(-13, hipH*.52+sit*10, 6+sit*42), anL:J3(-14, 9, sit*38+kick*8), toL:J3(-14, 4, sit*38+kick*8+15),
+      knR:J3(knR[0]+sit*0, L(knR[1], hipH*.55+10, sit), L(knR[2], 44, sit)), anR:J3(anR[0], L(anR[1],9,sit), L(anR[2],38,sit)), toR:J3(toR[0], L(toR[1],4,sit), L(toR[2],53,sit)),
+      neck:J3(2+lean*3, shH+5, lean*16), shL:J3(-19, shH, lean*16), shR:J3(19, shH-kick*5, lean*16),
+      elL:J3(-31-kick*12, shH-24+kick*12, lean*14+kick*6), haL:J3(L(-40-kick*24,-14,sit), L(shH-48+kick*32, hipH*.6+12, sit), L(lean*10+kick*10, 40, sit)),
+      elR:J3(30+kick*4, shH-26+kick*2, lean*14-kick*14), haR:J3(L(35+kick*8,12,sit), L(shH-52+kick*8, hipH*.6+12, sit), L(lean*8-kick*32, 40, sit)),
+      head:J3(2+lean*5, shH+26, lean*22),
+    };
+    drawBody(g, J, { jersey:this.jersey, shorts:'#fbfaf6', socks:this.jersey, skin:'#d9a37c', hair:'#2b1d16', back:true, num:'10' });
   }
   drawFrontArm(){}
 }
 
+// ---------- korner: ceza sahasındaki oyuncular ----------
+function makeMates(extraDef){
+  const s = SPOT.x<0 ? -1 : 1, Z=GOAL.z, m=[
+    { team:'a', x:s*230,  z:Z-420 }, { team:'a', x:-s*20, z:Z-690 }, { team:'a', x:-s*250, z:Z-460 },
+    { team:'d', x:s*120,  z:Z-530 }, { team:'d', x:-s*110, z:Z-600 } ];
+  if(extraDef) m.push({ team:'d', x:s*30, z:Z-470 }, { team:'d', x:-s*230, z:Z-380 });
+  return m.map((o,i)=>({ ...o, i, jy:0, jt:-1, skin:SKINS[(i+2)%SKINS.length], hair:HAIRS[(i+1)%HAIRS.length] }));
+}
+function updateMates(ms, dt, balls){
+  for(const m of ms){
+    if(m.jt<0) for(const b of balls){ if(b.fade || b.headed || b.saved || b.y>-60) continue;
+      if(Math.hypot(b.x-m.x, b.z-m.z) < 380 && Math.hypot(b.x+b.vx*.2-m.x, b.z+b.vz*.2-m.z) < Math.hypot(b.x-m.x, b.z-m.z)){ m.jt=0; break; } }
+    if(m.jt>=0){ m.jt+=dt; if(m.jt>=.55){ m.jt=-1; m.jy=0; } else m.jy=Math.sin(Math.PI*m.jt/.55)*38; }
+  }
+}
+function drawMate(g, m){
+  if(m.team==='a'){ const c=proj(m.x,0,m.z); g.strokeStyle='rgba(255,255,255,.55)'; g.lineWidth=2; g.beginPath(); g.ellipse(c.x,c.y,44*c.k,14*c.k,0,0,7); g.stroke(); }
+  const own = m.team==='a';
+  drawPersonFront(g, m.x, m.z, m.jy, { jersey: own ? court.color : DEF_JERSEY, shorts: own ? '#fbfaf6' : '#26221e', socks: own ? court.color : DEF_JERSEY,
+    skin:m.skin, hair:m.hair, pose: m.jy>4 ? 'jump' : (own ? 'ready' : 'stand') });
+}
+// top bir oyuncuya ya da kaleciye değdi mi? (korner)
+function mateTouch(c, b, ghost){
+  const h=-b.y;
+  if(KICK==='ck' && b.z>GOAL.z-170 && Math.abs(b.x-GOAL.x)<GOAL.w/2+40 && h<255 && h>20 && b.vz>-50 && !b.headed){
+    b.saved=true; b.vx*=.1; b.vz=-60; b.vy=-120; b.sp=0;
+    if(!ghost){ sfx.board(700); const q=proj(b.x,h,b.z); c.floaters.push({ x:q.x, y:q.y-30, t:0, txt:'Kaleci topladı' }); }
+    return;
+  }
+  for(const m of c.mates){
+    const reachTop = m.team==='a' ? 262+m.jy : 250+m.jy, reachLow = m.team==='a' ? 125 : 10;
+    if(Math.hypot(b.x-m.x, b.z-m.z) > 52+BR || h>reachTop || h<reachLow) continue;
+    b.headed=true; b.sp=0;
+    if(m.team==='d'){                                              // savunma uzaklaştırdı
+      b.vx=(hrand(b.sid,91)-.5)*900; b.vz=-1100; b.vy=-520;
+      if(!ghost){ sfx.board(500); const q=proj(b.x,h,b.z); c.floaters.push({ x:q.x, y:q.y-30, t:0, txt:'Uzaklaştırdı' }); }
+      return;
+    }
+    // kafa vuruşu: kalenin rastgele bir noktasına (tohumlu)
+    const r1=hrand(b.sid,61), r2=hrand(b.sid,73), side = r1<.5 ? -1 : 1;
+    const tx=GOAL.x+side*(GOAL.w/2)*(.3+.85*hrand(b.sid,83)), th=25+r2*235;
+    const D=Math.hypot(tx-b.x, GOAL.z-b.z), T=Math.max(.3, D/1500);
+    b.vx=(tx-b.x)/T; b.vz=(GOAL.z-b.z)/T; b.vy=(-th + h - .5*GRAV*T*T)/T;
+    b.sid += 5000;                                                 // kaleci yeni bir şut olarak görsün
+    if(!ghost){ sfx.board(800); const q=proj(b.x,h,b.z); c.floaters.push({ x:q.x, y:q.y-36, t:0, txt:'Kafa!' }); }
+    return;
+  }
+}
+
+// oyuncunun yan/yukarı hızı + sabit ileri hız → dünya hızı; sp: falso (yanal ivme, cm/s²)
+function setShotVel(b, vx, vy, sp){
+  b.vx=CAMF.rx*vx + CAMF.fx*VZ_NOW; b.vz=CAMF.rz*vx + CAMF.fz*VZ_NOW; b.vy=vy;
+  b.sp=sp||0; b.srx=CAMF.rx; b.srz=CAMF.rz;
+}
 let lastGoalT=0;
 class Court {
   constructor(){ this.color=PLAYER_BALL[0]; this.reset(this.color); }
@@ -968,21 +1163,22 @@ class Court {
     this.rack=SHOTS-1; this.holding=true; this.fig=new Kicker(); this.fig.jersey=color; this.state='ready'; this.timer=0;
     this.net=0; this.floaters=[]; this.idle=0; this.aim=null; this.lastLaunch=0; this.timeUp=false; this.pending=null;
     this.defs = DEF_CFG ? makeDefendersCfg(DEF_CFG) : []; this.keeper=makeKeeper(); this.shotN=0;
+    this.mates = KICK==='ck' ? makeMates(CK_EXTRA) : [];
   }
   get left(){ return this.rack + (this.holding?1:0); }
   syncStart(seed){
-    RNG = seeded(String(seed||'')); this.defs = DEF_CFG ? makeDefendersCfg(DEF_CFG) : []; this.keeper=makeKeeper(); RNG = Math.random; this.shotN=0;
+    RNG = seeded(String(seed||'')); this.defs = DEF_CFG ? makeDefendersCfg(DEF_CFG) : []; this.keeper=makeKeeper(); RNG = Math.random; this.shotN=0; this.mates = KICK==='ck' ? makeMates(CK_EXTRA) : [];
     this.simTick=0; this.acc=0; SHOTLOG=[]; SEED=String(seed||'');
   }
   canShoot(){ return game==='play' && !this.timeUp && this.state==='ready' && this.holding && !lvSeqWait; }
-  launch(vx, vy, ptsOverride){
-    const b=new Ball(SPOT.x, -BR, SPOT.z); b.vx=vx; b.vy=vy; b.vz=VZ; b.color=this.color; b.sid=(this.shotN=(this.shotN||0)+1);
+  launch(vx, vy, ptsOverride, sp){
+    const b=new Ball(SPOT.x, -BR, SPOT.z); setShotVel(b, vx, vy, sp); b.color=this.color; b.sid=(this.shotN=(this.shotN||0)+1);
     b.pts = BASE_PTS + Math.floor(Math.max(0,timeLeft))*PTS_PER_SEC*PTS_MUL;
     if(ptsOverride==null && game==='play' && MODE==='level' && curLevel && curLevel.gold && this.left===1){ b.pts*=3; b.gold=true; b.color='#e9b949';
       this.floaters.push({ x:360, y:860, t:0, txt:'Altın top ×3' }); }
     if(ptsOverride!=null) b.pts=ptsOverride;
-    if(game==='play') SHOTLOG.push([this.simTick||0, vx, vy, b.pts]);
-    if(game==='play' && MODE==='online' && rm){ myShotN++; rm.presence({ ls:{ n:myShotN, vx:Math.round(vx), vy:Math.round(vy), rd:round, pts:b.pts } }).catch(()=>{}); }
+    if(game==='play') SHOTLOG.push([this.simTick||0, vx, vy, b.pts, Math.round(sp||0)]);
+    if(game==='play' && MODE==='online' && rm){ myShotN++; rm.presence({ ls:{ n:myShotN, vx:Math.round(vx), vy:Math.round(vy), sp:Math.round(sp||0), rd:round, pts:b.pts } }).catch(()=>{}); }
     this.balls.push(b); this.holding=false; sfx.throw(); this.lastLaunch=performance.now();
     timeLeft=BALL_TIME; lastTick=99;
   }
@@ -996,13 +1192,15 @@ class Court {
   }
   // tek top adımı (asıl toplar ve hayalet toplar aynı yolu kullanır)
   stepBall(b, h, ghost){
-    const pz=b.z;
-    b.vy += GRAV*h; if(WIND && b.y < -BR-2 && !b.inNet) b.vx += WIND*h;
+    const pz=b.z, pdep=depthOf(b.x,b.z), air=b.y < -BR-2 && !b.inNet;
+    b.vy += GRAV*h; if(WIND && air) b.vx += WIND*h;
+    if(b.sp && air && !b.saved && !b.blocked){ b.vx += b.sp*b.srx*h; b.vz += b.sp*b.srz*h; }
     b.x += b.vx*h; b.y += b.vy*h; b.z += b.vz*h; b.a += (Math.abs(b.vz)+Math.abs(b.vx))*h/BR*.5;
     // baraj
-    if(!ghost && this.defs.length && !b.blocked && pz < wallZ() && b.z >= wallZ()){
+    if(this.mates && this.mates.length && !b.headed && !b.saved) mateTouch(this, b, ghost);
+    if(!ghost && this.defs.length && !b.blocked && pdep < WALL_D && depthOf(b.x,b.z) >= WALL_D){
       const d=defendersHit(this.defs, b);
-      if(d){ b.blocked=true; b.vz=-Math.abs(b.vz)*.3; b.vx+=(b.x-d.x)*4; b.vy=Math.min(b.vy,-150); sfx.board(600);
+      if(d){ b.blocked=true; b.sp=0; const vf=b.vx*CAMF.fx+b.vz*CAMF.fz, dl=latOf(b.x,b.z)-d.l; b.vx+=-CAMF.fx*vf*1.3+CAMF.rx*dl*4; b.vz+=-CAMF.fz*vf*1.3+CAMF.rz*dl*4; b.vy=Math.min(b.vy,-150); sfx.board(600);
         this.floaters.push({ x:proj(b.x,-b.y,b.z).x, y:proj(b.x,-b.y,b.z).y-30, t:0, txt:'Baraj!' }); }
     }
     // kaleci
@@ -1044,19 +1242,20 @@ class Court {
   }
   onScore(b){
     const top=goalTop(), corner = Math.abs(b.x-GOAL.x) > GOAL.w/2-95 && -b.y > GOAL.h-85;
-    const pts = corner ? b.pts*2 : b.pts;
-    if(game==='replay'){ this.net=1; sfx.swish(); if(REPLAY){ REPLAY.score+=pts; REPLAY.bk++; } this.floaters.push({x:top.x, y:top.y, t:0, txt: corner?`Doksan! +${pts}`:`Gol! +${pts}`}); return; }
+    const olimpik = KICK==='ck' && !b.headed, pts = (corner ? b.pts*2 : b.pts) * (olimpik ? 3 : 1);
+    const label = olimpik ? 'Olimpik gol!' : corner ? 'Doksan!' : b.headed ? 'Kafa golü!' : 'Gol!';
+    if(game==='replay'){ this.net=1; sfx.swish(); if(REPLAY){ REPLAY.score+=pts; REPLAY.bk++; } this.floaters.push({x:top.x, y:top.y, t:0, txt:`${label} +${pts}`}); return; }
     this.net=1; lastGoalT=2; sfx.swish(); sfx.cheer && sfx.cheer();
     const p=players[turnIdx]; if(p){ p.score+=pts; p.roundPts+=pts; p.baskets++; }
     if(game==='play' && !botTurn()) buzz(b.gold||corner ? [40,60,40] : 35);
     pushPresence();
-    this.floaters.push({x:top.x, y:top.y, t:0, txt: corner?`Doksan! +${pts}`:`Gol! +${pts}`});
+    this.floaters.push({x:top.x, y:top.y, t:0, txt:`${label} +${pts}`});
   }
   settled(){ return this.balls.every(b=>b.fade || b.rest>.35); }
-  addGhost(vx, vy, pts, nm, color){
+  addGhost(vx, vy, pts, nm, color, sp){
     if(!this.ghosts) this.ghosts=[];
     if(this.ghosts.length>6) this.ghosts.shift();
-    const b=new Ball(SPOT.x, -BR, SPOT.z); b.vx=vx; b.vy=vy; b.vz=VZ; b.color=hexA(color,.5); b.ink=color; b.nm=nm; b.pts=pts; b.life=0;
+    const b=new Ball(SPOT.x, -BR, SPOT.z); setShotVel(b, vx, vy, sp); b.color=hexA(color,.5); b.ink=color; b.nm=nm; b.pts=pts; b.life=0;
     this.ghosts.push(b);
     this.floaters.push({ x:360, y:800, t:0, txt:`${nm} vurdu`, color });
   }
@@ -1074,6 +1273,7 @@ class Court {
       if(game==='replay' && REPLAY) replayTick();
       if(p.defs.length) updateDefenders(p.defs, STEP, p.balls);
       updateKeeper(p.keeper, STEP, p.balls);
+      if(p.mates && p.mates.length) updateMates(p.mates, STEP, p.balls);
       p.physics(STEP, 1); p.simTick=(p.simTick||0)+1; }
     if(MODE==='online') p.ghostPhysics(dt); else if(p.ghosts && p.ghosts.length) p.ghosts=[];
     if(game!=='play' && game!=='replay') return;
@@ -1084,7 +1284,7 @@ class Court {
       case 'doubting': if(p.timer>1.4){ p.fig.go('sit',1.1); p.state='sitting'; } break;
       case 'standup': if(p.fig.done){ p.state='ready'; p.idle=0; } break;
       case 'releasing':
-        if(p.timer>=.12){ p.launch(p.pending.vx, p.pending.vy); p.state='follow'; p.timer=0; }
+        if(p.timer>=.12){ p.launch(p.pending.vx, p.pending.vy, null, p.pending.sp||0); p.state='follow'; p.timer=0; }
         break;
       case 'follow':
         if(p.timer>.6){
@@ -1109,15 +1309,17 @@ class Court {
     const dball=o=>{ const b=o.b, q=proj(b.x,-b.y,b.z), r=Math.max(2.5,BR*q.k);
       const sh=proj(b.x,0,b.z); g.fillStyle='rgba(0,0,0,.18)'; g.beginPath(); g.ellipse(sh.x,sh.y,r*1.1,r*.35,0,0,Math.PI*2); g.fill();
       drawBall(g,q.x,q.y,b.a,o.gh?b.color:(b.color||this.color),b.alpha*(o.gh?.9:1),r); };
-    all.filter(o=>o.b.z>=GOAL.z).forEach(dball);
-    drawKeeper(g, this.keeper);
-    drawGoal(g, true);
-    all.filter(o=>o.b.z<GOAL.z && o.b.z>=wallZ()).forEach(dball);
-    if(this.defs.length) drawWall(g, this.defs);
-    all.filter(o=>o.b.z<wallZ() && o.b.z>SPOT.z+60).forEach(dball);
-    { const fly=this.balls.some(b=>!b.fade && b.z>SPOT.z+200 && b.z<GOAL.z+GOAL.depth); g.save(); if(fly) g.globalAlpha=.4; this.fig.draw(g); g.restore(); }
-    if(this.holding){ const q=proj(SPOT.x,BR,SPOT.z); drawBall(g,q.x,q.y,.4,this.color,1,BR*q.k); }
-    all.filter(o=>o.b.z<=SPOT.z+60).forEach(dball);
+    // derinliğe göre sırala: uzaktaki önce çizilir
+    const gd=depthOf(GOAL.x,GOAL.z), items=[];
+    for(const o of all) items.push({ d:depthOf(o.b.x,o.b.z), f:()=>dball(o) });
+    items.push({ d:depthOf(this.keeper.x,KZ())+40, f:()=>drawKeeper(g, this.keeper) });
+    items.push({ d:gd, f:()=>drawGoal(g, true) });
+    if(this.defs.length) items.push({ d:WALL_D, f:()=>drawWall(g, this.defs) });
+    for(const m of (this.mates||[])) items.push({ d:depthOf(m.x,m.z), f:()=>drawMate(g, m) });
+    const fly=this.balls.some(b=>!b.fade && depthOf(b.x,b.z)>200 && depthOf(b.x,b.z)<gd+GOAL.depth);
+    items.push({ d:-40, f:()=>{ g.save(); if(fly) g.globalAlpha=.4; this.fig.draw(g); g.restore(); } });
+    if(this.holding) items.push({ d:0, f:()=>{ const q=proj(SPOT.x,BR,SPOT.z); drawBall(g,q.x,q.y,.4,this.color,1,BR*q.k); } });
+    items.sort((p,q)=>q.d-p.d).forEach(it=>it.f());
     if(MODE==='level' && curLevel) drawLevelFx(g);
     for(const f of this.floaters){
       g.globalAlpha=Math.max(0,1-f.t/1.3); g.fillStyle=f.color||C.ink; g.font=f.color?'800 24px ui-sans-serif,system-ui,sans-serif':'800 32px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center';
@@ -1135,7 +1337,9 @@ class Court {
       g.fillText('Vazgeçme. Dokun, kalk. Topun süresi işliyor!', 360, 790); g.globalAlpha=1;
     } else if(game==='play' && round===0 && this.left===SHOTS && this.state==='ready' && !this.aim){
       g.globalAlpha=.5+.5*Math.sin(performance.now()/350); g.fillStyle='#fbfaf6'; g.font='700 22px ui-sans-serif,system-ui,sans-serif';
-      g.fillText('Topu geri çek · Nişan al · Bırak', 360, 1205); g.globalAlpha=1;
+      const hy = KICK==='ck' ? 600 : 1192;
+      g.fillText('Topu geri çek · Nişan al · Bırak', 360, hy); g.font='600 18px ui-sans-serif,system-ui,sans-serif';
+      g.fillText(KICK==='ck' ? 'Halkadaki arkadaşının kafasına orta aç · Kıvır: falso' : 'Falso için çekerken parmağını yay gibi kıvır', 360, hy+28); g.globalAlpha=1;
     }
     g.textAlign='left';
     if(this.aim) drawAim(g, this);
@@ -1156,7 +1360,7 @@ function releasePoint(){ return { x:SPOT.x, y:-BR, z:SPOT.z }; }
 
 function startTournament(){
   const isMatch = MODE==='match' && curMatch, isLevel = MODE==='level' && curLevel;
-  if(!isLevel) clearLevelEnv();
+  if(!isLevel){ const k = MODE==='solo' ? KICK : 'pen'; clearLevelEnv(); KICK=k; camUpdate(); }
   ROUNDS = isMatch || isLevel ? 1 : 3;
   SHOTS = isMatch && curMatch.ot ? 1 : isLevel ? lvShots(curLevel) + LV_BONUS : 5; LV_BONUS = 0;
   PREVIEW_OVR = isMatch ? ((curMatch.league || curMatch.tid || curMatch.kind==='league' || curMatch.kind==='tour') ? cupPreview(curMatch) : MATCH_PREVIEW) : null;
@@ -1258,8 +1462,8 @@ function showRoundResults(){
     el('rTitle').textContent = last ? 'Oyun bitti' : `${round}. tur bitti`;
     el('rScore').textContent = last ? fmt(p.score) : `+${fmt(got)}`;
     if(last){
-      statGame('free', p.score);
-      const best=Math.max(+(store('best-pts-3t')||0), p.score); store('best-pts-3t', best);
+      const bk = KICK==='pen' ? 'best-pts-3t' : 'best-'+KICK; if(KICK==='pen') statGame('free', p.score); else statGame(KICK, p.score);
+      const best=Math.max(+(store(bk)||0), p.score); store(bk, best);
       el('rMsg').textContent = `${p.baskets}/${ROUNDS*SHOTS} gol. Vurmadığın toplar kaçmış sayılır.`;
       el('rHint').textContent = `En iyi puanın: ${fmt(best)}`;
     } else {
@@ -1487,7 +1691,7 @@ function spawnGhosts(){
     const first = ghostSeen[p.peer]===undefined; ghostSeen[p.peer]=ls.n;
     if(first && onlineStarted && Date.now()-myT0 < 1500) continue;            // odaya girerken eski atışı oynatma
     if(game!=='play' || num(ls.rd)!==round) continue;
-    court.addGhost(num(ls.vx), num(ls.vy), num(ls.pts), String(p.presence.nm||'').slice(0,14), PLAYER_BALL[Math.max(0,Math.min(3,num(p.presence.ci)))]);
+    court.addGhost(num(ls.vx), num(ls.vy), num(ls.pts), String(p.presence.nm||'').slice(0,14), PLAYER_BALL[Math.max(0,Math.min(3,num(p.presence.ci)))], num(ls.sp));
   }
 }
 function onPeersChange(){
@@ -2283,8 +2487,25 @@ const LEVELS = [
     sky:{ skyTop:'#1f2340', skyMid:'#2c3158', skyLow:'#3a3f68', stand:'#2f3352', grass:'#3f6b36', grass2:'#38612f', board:'#e8590c' } },
   { ch:2, name:'Stadın Efsanesi', story:'Stadın efsane kalecisi {a} seni bekliyor. 7 top, kayan kale, rüzgâr ve altın son top.', rule:'Patron kaleci, kayan kale, rüzgâr, 7 top, altın son top.', preview:.25, keeper:'boss', spot:[450,0], move:{ amp:80, sp:.8 }, wind:-140, gust:true, shots:7, gold:true, stars:[90,180,280],
     sky:{ skyTop:'#f3d2c8', skyMid:'#e2a58e', skyLow:'#b8705a', stand:'#c7a08f' } },
+  // ---------- 3. BÖLÜM · DURAN TOPLAR ----------
+  { ch:3, kick:'fk', name:'İlk Frikik', story:'Ceza sahasının hemen dışında faul! Önünde {a} ve iki arkadaşından oluşan bir baraj var.', rule:'20 metre, 3 kişilik baraj. Barajın üstünden ya da yanından.', preview:.7, keeper:0, spot:[900,-500], wallN:3, stars:[60,130,210] },
+  { ch:3, kick:'ck', name:'İlk Korner', story:'Korner senin. Ceza sahasında üç arkadaşın bekliyor; topu onların kafasına bırak.', rule:'Beyaz halkadaki arkadaşına orta aç, kafayla vursun. Direkt gol ×3!', preview:.75, keeper:0, side:-1, stars:[50,110,180] },
+  { ch:3, kick:'fk', name:'Falso Dersi', story:'Antrenör {a}: “Barajı dolan. Çekerken parmağını kıvır, top döner.”', rule:'Açılı frikik, 4 kişilik baraj. Falso ver.', preview:.6, keeper:1, spot:[1000,850], wallN:4, stars:[50,120,190] },
+  { ch:3, kick:'ck', name:'Kafa Golü', story:'Sağ köşeden orta. Rakip savunma {a} ve {b} topu uzaklaştırmaya hazır.', rule:'Sağ köşe, orta seviye kaleci. Gri formalılara değdirme.', preview:.6, keeper:1, side:1, stars:[50,110,170] },
+  { ch:3, kick:'fk', name:'Uzaktan Frikik', story:'25 metre. Kaleci {a} barajı dizdi bile.', rule:'25 metre, 5 kişilik baraj.', preview:.55, keeper:1, spot:[1400,0], wallN:5, stars:[40,100,170] },
+  { ch:3, kick:'ck', name:'Kalabalık Ceza Sahası', story:'Her korner başka köşeden, ceza sahası adam dolu.', rule:'Köşe her topta değişir, 4 savunmacı.', preview:.5, keeper:2, ckDef:true, seq:[[-1075,-3380],[-1075,3380],[-1075,-3380],[-1075,3380],[-1075,-3380]], stars:[40,100,160] },
+  { ch:3, kick:'fk', name:'Rüzgârlı Frikik', story:'Rüzgâr topu sürüklüyor. Falsoyu rüzgâra karşı ver.', rule:'Rüzgâr + 4 kişilik baraj + iyi kaleci.', preview:.45, keeper:2, spot:[1100,-800], wallN:4, wind:140, gust:true, stars:[40,100,160],
+    sky:{ skyTop:'#e9f2f5', skyMid:'#f6efe0', skyLow:'#f7dcb8' } },
+  { ch:3, kick:'ck', name:'Gece Kornerleri', story:'Projektörlerin altında son dakikalar. Bir korner, bir şans.', rule:'Karanlık + kalabalık savunma.', preview:.4, keeper:2, night:true, ckDef:true, side:-1, stars:[40,90,150],
+    sky:{ skyTop:'#2c2a44', skyMid:'#3b3758', skyLow:'#4c4568', stand:'#3a364f', grass:'#3f6b36', grass2:'#38612f' } },
+  { ch:3, kick:'fk', name:'Frikik Serisi', story:'Beş faul, beş farklı yer. Son top altın!', rule:'Her topta yer değişir, 4 kişilik baraj, altın son top.', preview:.4, keeper:2, wallN:4, gold:true,
+    seq:[[900,-600],[1000,700],[1200,-250],[1300,450],[1500,0]], stars:[60,140,230] },
+  { ch:3, kick:'fk', name:'Duran Top Ustası', story:'Efsane kaleci {a} karşında. Barajda beş kişi zıplıyor.', rule:'Patron kaleci, 5 kişilik baraj, yer değişir.', preview:.3, keeper:'boss', wallN:5,
+    seq:[[1000,-700],[1100,800],[1300,-300],[1400,300],[1500,0]], stars:[40,90,150],
+    sky:{ skyTop:'#f6d6c2', skyMid:'#efb48f', skyLow:'#d9805f' } },
 ].map((l,i)=>({ ...l, n:i+1, id:'L'+(i+1) }));
-const LV_N = LEVELS.length, LV_BOSS = LEVELS.filter((l,i)=>i===LV_N-1 || (LEVELS[i+1] && LEVELS[i+1].ch && !l.ch)).map(l=>l.n);
+const CH_NAMES = { 2:'Büyük Stat', 3:'Duran Toplar' };
+const LV_N = LEVELS.length, LV_BOSS = LEVELS.filter((l,i)=>i===LV_N-1 || (LEVELS[i+1] && (LEVELS[i+1].ch||1)!==(l.ch||1))).map(l=>l.n);
 const lvShots = lv => (lv && lv.shots) || 5;
 
 const SKY_DEF = { skyTop:'#cfe3f0', skyMid:'#e6eef0', skyLow:'#f3ead8', floor:'#5e9e4a' };
@@ -2302,10 +2523,13 @@ function applyLevelEnv(lv){
   WIND = lv.storm ? 0 : (lv.wind||0); DEF_CFG = lv.defs||null; PREVIEW_OVR = lv.preview;
   KEEPER_IS_BOSS = lv.keeper==='boss'; KEEPER_LVL = KEEPER_IS_BOSS ? 3 : (lv.keeper==null ? 1 : lv.keeper); DEF_N = KEEPER_LVL;
   SKY = { ...SKY_DEF, ...(lv.sky||{}) };
-  const sp = lv.seq ? lv.seq[0] : (lv.spot||[0,0]);
+  KICK = lv.kick||'pen'; CK_EXTRA = !!lv.ckDef;
+  const sp = lv.seq ? lv.seq[0] : lv.kick==='ck' ? [-(GOAL.z-25), (lv.side||-1)*3380] : (lv.spot||[0,0]);
   setCourtXY(sp[0], sp[1], lv.goalW||1); GOAL.x=0;
+  if(lv.kick==='fk' && lv.wallN) DEF_CFG=fkWall(lv.wallN);
 }
-function clearLevelEnv(){ lvSeqIdx=-1; lvSeqWait=false; GRAV=G; PTS_MUL=1; BALL_TIME=10; WIND=0; DEF_CFG=null; SKY={ ...SKY_DEF }; curLevel=null; KEEPER_IS_BOSS=false; GOAL.x=0; GOAL_SCALE=1; GOAL.w=732; }
+const ckSpot = s => [-(GOAL.z-25), s*3380];
+function clearLevelEnv(){ KICK='pen'; CK_EXTRA=false; lvSeqIdx=-1; lvSeqWait=false; GRAV=G; PTS_MUL=1; BALL_TIME=10; WIND=0; DEF_CFG=null; SKY={ ...SKY_DEF }; curLevel=null; KEEPER_IS_BOSS=false; GOAL.x=0; GOAL_SCALE=1; GOAL.w=732; camUpdate(); }
 let lvSeqIdx=-1, lvSeqWait=false;
 function lvSeqH(lv, i){ return lv.seq[Math.min(i, lv.seq.length-1)]; }
 function levelTick(dt){
@@ -2316,6 +2540,8 @@ function levelTick(dt){
       const air=court.balls.some(b=>!b.fade && !b.past && !b.saved && !b.blocked && b.rest<=0);
       lvSeqWait = air;
       if(!air){ lvSeqIdx=want; const sp=lvSeqH(lv,want); setCourtXY(sp[0], sp[1], lv.goalW||1);
+        if(lv.kick==='fk' && lv.wallN) court.defs=makeDefendersCfg(fkWall(lv.wallN));
+        if(lv.kick==='ck') court.mates=makeMates(CK_EXTRA);
         if(want>0) court.floaters.push({ x:360, y:520, t:0, txt:'Nokta değişti' }); }
     } else lvSeqWait=false;
   }
@@ -2364,7 +2590,7 @@ function renderLevels(){
     <p class="note" style="text-align:center">Levellerde genelde 5 top var, her top için 10 saniye (bazı levellerde farklı). Topladığın puana göre 1–3 yıldız kazanırsın; 1 yıldız sonraki leveli açar. Toplam puan, her levelin en iyi skorlarının toplamıdır.</p>
     <div class="lvgrid"><div class="lv-ch">1. Bölüm · Mahalle</div>` + LEVELS.map((l,i)=>{
       const open=lvUnlocked(i), s=num(b[l.id]), k=starsFor(l,s);
-      const ch = (l.ch && !(LEVELS[i-1]||{}).ch) ? `<div class="lv-ch">${l.ch}. Bölüm · Büyük Stat</div>` : '';
+      const ch = (l.ch && l.ch!==(LEVELS[i-1]||{}).ch) ? `<div class="lv-ch">${l.ch}. Bölüm · ${CH_NAMES[l.ch]}</div>` : '';
       return ch + `<div class="lv${open?'':' lock'}${i===firstOpen?' cur':''}${LV_BOSS.includes(l.n)?' boss':''}" data-lv="${i}">
         <div class="n">${open?l.n:'🔒'}</div><div class="nm">${esc(l.name)}</div><div class="st">${starStr(k)}</div><div class="bs">${s?fmt(s):'&nbsp;'}</div></div>`;
     }).join('') + `</div>
@@ -2762,6 +2988,9 @@ document.getElementById('cpuBody').addEventListener('click', e=>{
 });
 document.getElementById('soloMacera').onclick=()=>{ audio(); showLevels(); };
 document.getElementById('soloCpu').onclick=()=>{ audio(); showCpuHub(); };
+function startSetPiece(k){ audio(); clearLevelEnv(); KICK=k; camUpdate(); MODE='solo'; showOnly(null); startTournament(); }
+document.getElementById('soloFk').onclick=()=>startSetPiece('fk');
+document.getElementById('soloCk').onclick=()=>startSetPiece('ck');
 document.getElementById('soloOnline').onclick=()=>{ audio(); showOnlineHub(); };
 document.getElementById('soloBack').onclick=()=>goMenu();
 onCloud(()=>{ if(visible('ovCpu') && cpuBack===showOnlineHub) renderOnlineHub(); });
@@ -2774,9 +3003,9 @@ const randn=()=>{ let u=0,v=0; while(!u) u=Math.random(); while(!v) v=Math.rando
 // nişan: çember ortasının biraz üstü; savunmacı varsa daha yüksek kavis; hata payı rakibin seviyesine göre
 // bot: kalede bir hedef seçer (iyi kaleciye karşı köşelere yakın), hata payı seviyesine göre
 function botAimVelocity(r, def){
-  const T=(GOAL.z-SPOT.z)/VZ, side=Math.random()<.5?-1:1, edge=Math.min(.95, .45+.12*(def||0)+Math.random()*.4);
+  const T=depthOf(GOAL.x,GOAL.z)/VZ_NOW, side=Math.random()<.5?-1:1, edge=Math.min(.95, .45+.12*(def||0)+Math.random()*.4);
   const tx=GOAL.x+side*(GOAL.w/2-BR-8)*edge, th=BR+Math.random()*(GOAL.h-BR*2-20);
-  const vx=(tx-SPOT.x)/T-.5*WIND*T, vyUp=(th-BR+.5*GRAV*T*T)/T;
+  const vx=latOf(tx,GOAL.z)/T-.5*WIND*T, vyUp=(th-BR+.5*GRAV*T*T)/T;
   const sig=Math.max(.01, BOT_SIG0 - BOT_SIGK*r);
   return { vx:vx+randn()*sig*700, vy:-(vyUp+randn()*sig*520) };
 }
@@ -2813,8 +3042,8 @@ function replayTick(){
   const nx=R.shots[R.i];
   if(nx && num(nx[0])-c.simTick===100 && c.holding) c.fig.go('set',.3);
   while(R.i<R.shots.length && num(R.shots[R.i][0])<=c.simTick){
-    const [k,vx,vy,pts]=R.shots[R.i];
-    c.launch(+vx, +vy, pts!=null ? num(pts) : null);
+    const [k,vx,vy,pts,sp]=R.shots[R.i];
+    c.launch(+vx, +vy, pts!=null ? num(pts) : null, num(sp));
     c.fig.facing=1; c.fig.go('release',.09); c.state='follow'; c.timer=0;
     R.i++;
   }
@@ -2833,7 +3062,7 @@ function playSeed(){
   if(MODE==='online') return `${myCode}-${round}`;
   return randSeed();
 }
-const shotPack = () => SHOTLOG.slice(0,12).map(s=>[s[0], s[1], s[2], s[3]]);
+const shotPack = () => SHOTLOG.slice(0,12).map(s=>[s[0], s[1], s[2], s[3], s[4]||0]);
 // maç öncesi izleme ekranı
 function replayIntro(){
   const R=curMatch.replay;
@@ -2947,6 +3176,8 @@ function renderStats(){
     <div class="st-row"><div class="st-h"><b>Macera</b><span>${lvDone}/${LV_N} level</span></div>
       <div class="wbar"><span class="w" style="width:${lvT.st/(LV_N*3)*100}%;background:#e8590c"></span></div>
       <div class="st-sub">${lvT.st}/${LV_N*3} yıldız · toplam puan ${fmt(lvT.pts)} · ${num((STATS.macera||{}).games)} oyun</div></div>
+    <div class="st-row"><div class="st-h"><b>Frikik · Korner</b><span>${num((STATS.fk||{}).games)} · ${num((STATS.ck||{}).games)} oyun</span></div>
+      <div class="st-sub">En iyi: frikik ${fmt(num((STATS.fk||{}).best))} · korner ${fmt(num((STATS.ck||{}).best))}</div></div>
     <div class="st-row"><div class="st-h"><b>Serbest antrenman</b><span>${num((STATS.free||{}).games)} oyun</span></div>
       <div class="st-sub">En iyi skor: ${fmt(num((STATS.free||{}).best))}</div></div>
     <p class="note">G: galibiyet · B: beraberlik · M: mağlubiyet. Online oda: birincilik galibiyet, ortak birincilik beraberlik, diğer sıralar mağlubiyet sayılır. Turnuvada uzatmalar maçın parçasıdır; bay geçmeler sayılmaz. Aynı telefonda oynanan oyunlar kişiye ait olmadığı için sayılmaz.</p>
@@ -2999,17 +3230,27 @@ cv.addEventListener('pointerdown', e => {
   const p=court; p.idle=0;
   if(p.state==='sitting' || p.state==='doubting'){ p.fig.go('hold',.6); p.state='standup'; return; }
   if(!p.canShoot() || p.aim) return;
-  p.aim={sx:pt.x, sy:pt.y, x:pt.x, y:pt.y}; activePointer=e.pointerId;
+  p.aim={sx:pt.x, sy:pt.y, x:pt.x, y:pt.y, path:[pt]}; activePointer=e.pointerId;
   p.fig.go('set',.25);
   try{ cv.setPointerCapture(e.pointerId); }catch(_){}
 });
-cv.addEventListener('pointermove', e => { if(e.pointerId!==activePointer || !court.aim) return; const pt=toLocal(e); court.aim.x=pt.x; court.aim.y=pt.y; });
+cv.addEventListener('pointermove', e => { if(e.pointerId!==activePointer || !court.aim) return; const pt=toLocal(e); const a=court.aim; a.x=pt.x; a.y=pt.y;
+  const l=a.path[a.path.length-1]; if(Math.hypot(pt.x-l.x, pt.y-l.y)>4){ a.path.push(pt); if(a.path.length>80) a.path.splice(1,1); } });
+// falso: parmak yolunun düz çizgiden en çok saptığı yan (yay). Sapan gibi ters çevrilir.
+function aimSpin(aim){
+  const P=aim.path; if(!P || P.length<3) return 0;
+  const ax=aim.sx, ay=aim.sy, bx=aim.x, by=aim.y, L=Math.hypot(bx-ax, by-ay); if(L<30) return 0;
+  let dev=0; for(const q of P){ const d=((bx-ax)*(q.y-ay)-(by-ay)*(q.x-ax))/L; if(Math.abs(d)>Math.abs(dev)) dev=d; }
+  const sgn = (by>=ay) ? 1 : -1;                     // aşağı çekerken sağa kıvrım → top sola döner
+  const v=Math.max(-1, Math.min(1, (Math.abs(dev)<9 ? 0 : (Math.abs(dev)-9)*Math.sign(dev)/55)));
+  return Math.round(v*sgn*SPIN_MAX[KICK]);
+}
 function aimVelocity(aim){
   if(!aim) return null;
   let dx=aim.sx-aim.x, dy=aim.sy-aim.y; const len=Math.hypot(dx,dy);
   if(len<14) return null;
   const k=Math.min(len,MAXPULL)/len; dx*=k; dy*=k;
-  return { vx:dx*POW_X, vy:dy*POW_Y, pull:Math.min(len,MAXPULL)/MAXPULL };
+  return { vx:dx*POW_X, vy:dy*POW_Y, pull:Math.min(len,MAXPULL)/MAXPULL, sp:aimSpin(aim) };
 }
 cv.addEventListener('pointerup', e => {
   if(e.pointerId!==activePointer) return; activePointer=null;
@@ -3024,18 +3265,22 @@ cv.addEventListener('pointercancel', e => { if(e.pointerId!==activePointer) retu
 function drawAim(g, p){
   const v=aimVelocity(p.aim); if(!v) return;
   const frac= PREVIEW_OVR!=null ? PREVIEW_OVR : PREVIEW[Math.min(round,PREVIEW.length-1)];
-  const T=(GOAL.z-SPOT.z)/VZ, n=Math.max(3, Math.round(30*frac));
-  g.fillStyle='#fbfaf6';
+  const T = KICK==='ck' ? 1.5 : depthOf(GOAL.x,GOAL.z)/VZ_NOW, n=Math.max(3, Math.round(30*frac));
+  const b={}; setShotVel(b, v.vx, v.vy, v.sp);
+  g.fillStyle = v.sp ? '#ffe2a8' : '#fbfaf6';
   for(let i=1;i<=n;i++){
-    const t=i/30*T, x=SPOT.x+v.vx*t, y=-BR+v.vy*t+.5*GRAV*t*t, z=SPOT.z+VZ*t;
+    const t=i/30*T, x=SPOT.x+b.vx*t+.5*b.sp*b.srx*t*t+.5*WIND*t*t, y=-BR+v.vy*t+.5*GRAV*t*t, z=SPOT.z+b.vz*t+.5*b.sp*b.srz*t*t;
     if(y>-BR+1 && i>2) break;
     const q=proj(x,-y,z);
     g.globalAlpha=.85*(1-i/(n+1))+.12; g.beginPath(); g.arc(q.x,q.y,Math.max(2.2, 4.2-i/n*2),0,Math.PI*2); g.fill();
   }
   g.globalAlpha=1;
-  const b=proj(SPOT.x,BR,SPOT.z);
+  const o=proj(SPOT.x,BR,SPOT.z);
   g.strokeStyle='rgba(255,255,255,.55)'; g.lineWidth=4; g.lineCap='round';
-  g.beginPath(); g.arc(b.x, b.y, 50, -Math.PI*.5, -Math.PI*.5+Math.PI*2*v.pull*.75); g.stroke();
+  g.beginPath(); g.arc(o.x, o.y, 50, -Math.PI*.5, -Math.PI*.5+Math.PI*2*v.pull*.75); g.stroke();
+  if(v.sp){ const f=Math.abs(v.sp)/SPIN_MAX[KICK], dir=v.sp>0?1:-1;
+    g.fillStyle='#ffe2a8'; g.font='800 20px ui-sans-serif,system-ui,sans-serif'; g.textAlign='center';
+    g.fillText(`FALSO ${dir>0?'→':'←'} ${Math.round(f*100)}%`, o.x, o.y-70); g.textAlign='left'; }
 }
 function spaced(g, px){ if(g.letterSpacing!==undefined) g.letterSpacing=px; }
 function drawHUD(g){
@@ -3051,6 +3296,8 @@ function drawHUD0(g){
   if(game==='replay' && REPLAY) g.fillText(`İZLİYORSUN  ·  ${trUpper(REPLAY.name)}`, 36, 98);
   else if(MODE==='level' && curLevel) g.fillText(`LEVEL ${curLevel.n}  ·  ${trUpper(curLevel.name)}`, 36, 98);
   else if(MODE==='match' && curMatch) g.fillText(trUpper(curMatch.stage) + (curMatch.ot?` · UZATMA`:'') + `  ·  KALECİ: ${trUpper(KEEPER_NAMES[Math.min(3,DEF_N)])}`, 36, 98);
+  else if(KICK==='fk') g.fillText(`FRİKİK · TUR ${rr+1}/${ROUNDS}  ·  ${(Math.hypot(GOAL.z-SPOT.z, SPOT.x)/100).toFixed(0)} M`, 36, 98);
+  else if(KICK==='ck') g.fillText(`KORNER · TUR ${rr+1}/${ROUNDS}  ·  ${SPOT.x<0?'SOL':'SAĞ'} KÖŞE`, 36, 98);
   else g.fillText(`TUR ${rr+1}/${ROUNDS}`+(far?`  ·  ${(11+DIST[rr][0]/100).toFixed(1).replace('.',',')} M`:''), 36, 98);
   spaced(g,'0px');
 
@@ -3249,7 +3496,7 @@ document.addEventListener('keydown', navPush, true);
 // test kancası
 if(/[?&]test\b/.test(location.search)) window.__game = { get preview(){ return PREVIEW_OVR; }, get match(){ return curMatch && { def:curMatch.def, kind:curMatch.kind, stage:curMatch.stage }; }, get replayScore(){ return REPLAY ? REPLAY.score : null; }, botAim:(r,d)=>botAimVelocity(r,d), setDef:n=>{ DEF_N=n; DEF_CFG=null; court.reset(PLAYER_BALL[0]); }, setSig:(a,k)=>{ BOT_SIG0=a; BOT_SIGK=k; },  court, get players(){return players;}, get game(){return game;}, get turnIdx(){return turnIdx;}, get round(){return round;},
   get timeLeft(){return timeLeft;}, set timeLeft(v){timeLeft=v;}, releasePoint,
-  startLevel:i=>startLevel(i), startQuick:id=>startQuick(id), get levelN(){ return LEVELS.length; },
+  startLevel:i=>startLevel(i), startQuick:id=>startQuick(id), setPiece:k=>startSetPiece(k), get kick(){ return KICK; }, get levelN(){ return LEVELS.length; },
   // hızlı ölçüm: kaleci seviyesi k (0-3, 4=patron), atıcı r, n şut → gol oranı (çizim yok)
   sim(k, r, n, aim){ const c=new Court(); let g=0, sv=0, out=0; const keepM=MODE; game='sim';
     for(let i=0;i<n;i++){ c.balls=[]; c.keeper=k===4 ? (MODE='level', KEEPER_IS_BOSS=true, makeKeeper()) : (()=>{ const K=makeKeeper(); K.P=KEEPER_LV[k]; return K; })(); MODE=keepM;
@@ -3258,6 +3505,19 @@ if(/[?&]test\b/.test(location.search)) window.__game = { get preview(){ return P
       for(let t=0;t<240*3 && !b.fade && !(b.past||b.saved); t++){ updateKeeper(c.keeper, STEP, c.balls); c.stepBall(b, STEP, false); }
       if(b.saved) sv++; else if(!b.scored) out++; }
     KEEPER_IS_BOSS=false; game='menu'; return { gol:g/n, kurtarma:sv/n, disari:out/n }; },
+  // duran top ölçümü: kick 'fk'|'ck', tur r, kaleci k, n şut, nişan gürültüsü sig (0..1), falso kullanımı
+  sim2(kick, r, k, n, sig, useSpin){ const keepK=KICK; KICK=kick; camUpdate(); setCourt(r); const c=new Court(); let g=0, sv=0, bl=0, out=0, hd=0; game='sim';
+    for(let i=0;i<n;i++){ c.balls=[]; c.keeper=makeKeeper(); c.keeper.P=KICK==='fk' ? { ...KEEPER_LV[k], reach:KEEPER_LV[k].reach*1.12, react:Math.min(.95,KEEPER_LV[k].react+.08) } : KEEPER_LV[k]; c.defs=DEF_CFG?makeDefendersCfg(DEF_CFG):[]; c.mates=kick==='ck'?makeMates(false):[];
+      let tl, td, th;
+      if(kick==='ck'){ const m=c.mates[Math.floor(Math.random()*3)]; tl=latOf(m.x,m.z); td=depthOf(m.x,m.z); th=205; }
+      else { const side=Math.random()<.5?-1:1, tx=GOAL.x+side*(GOAL.w/2-40)*(.5+.5*Math.random()); tl=latOf(tx,GOAL.z); td=depthOf(GOAL.x,GOAL.z); th=60+Math.random()*150; }
+      const T=td/VZ_NOW; let sp=0; if(useSpin && kick==='fk'){ sp=(tl>0?-1:1)*SPIN_MAX.fk*(.5+.5*Math.random()); }
+      const vx=(tl-.5*sp*T*T)/T, vy=-(th-BR+.5*GRAV*T*T)/T;
+      const b=new Ball(SPOT.x,-BR,SPOT.z); setShotVel(b, vx+randn()*sig*500, vy+randn()*sig*300, sp); b.sid=i+1; b.pts=10; c.balls.push(b);
+      c.onScore=()=>{ g++; };
+      for(let t=0;t<240*4 && !b.fade && !b.scored && !(b.past&&!b.inNet) && !b.saved && !(b.rest>0); t++){ updateKeeper(c.keeper, STEP, c.balls); if(c.defs.length) updateDefenders(c.defs, STEP, c.balls); if(c.mates.length) updateMates(c.mates, STEP, c.balls); c.stepBall(b, STEP, false); if(b.headed) hd+=0; }
+      if(b.headed) hd++; if(b.saved) sv++; else if(b.blocked) bl++; else if(!b.scored) out++; }
+    KICK=keepK; camUpdate(); game='menu'; return { gol:g/n, kurtarma:sv/n, baraj:bl/n, disari:out/n, temas:hd/n }; },
   shoot(vx,vy){ const p=court; if(!p.canShoot()) return false; p.pending={vx,vy}; p.fig.go('release',.09); p.state='releasing'; p.timer=0; return true; } };
 })();
 </script>
