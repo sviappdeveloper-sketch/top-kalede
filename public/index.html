@@ -1244,8 +1244,8 @@ class Court {
     }
     if(b.inNet && b.z > GOAL.z+GOAL.depth-BR){ b.z=GOAL.z+GOAL.depth-BR; b.vz=-Math.abs(b.vz)*.08; b.vx*=.3; }
     if(b.inNet && Math.abs(b.x-GOAL.x) > GOAL.w/2-BR){ b.x=GOAL.x+Math.sign(b.x-GOAL.x)*(GOAL.w/2-BR); b.vx*=-.2; }
-    if(b.y > -BR){ b.y=-BR; if(b.vy>0){ const v=b.vy; b.vy=-b.vy*.42; if(Math.abs(b.vy)<60) b.vy=0; if(v>220 && !ghost) sfx.bounce(v/3); }
-      const f=Math.pow(.3, h); b.vx*=f; b.vz*=f; }
+    if(b.y > -BR){ b.y=-BR; if(b.vy>0 && b.vz!==undefined && Math.abs(b.vy)>40) b.landed=true; if(b.vy>0){ const v=b.vy; b.vy=-b.vy*.42; if(Math.abs(b.vy)<60) b.vy=0; if(v>220 && !ghost) sfx.bounce(v/3); }
+      const f=Math.pow(.2, h); b.vx*=f; b.vz*=f; if(Math.hypot(b.vx,b.vz)<8){ b.vx=0; b.vz=0; } }
     if(b.z > GOAL.z+2400 || Math.abs(b.x) > 4000) { b.vx=0; b.vz=0; b.fade=true; }
   }
   physics(dt, steps=4){
@@ -1310,7 +1310,7 @@ class Court {
         }
         break;
       case 'turn': if(p.timer>.3){ p.state='bend'; p.timer=0; } break;
-      case 'bend': if(p.timer>.25 && p.balls.every(b=>b.fade || b.past || b.saved || b.blocked || b.rest>0)){ p.rack--; p.holding=true; p.fig.go('hold',.3); p.state='rise'; p.timer=0;
+      case 'bend': if(p.timer>.25 && (p.timer>2.5 || p.balls.every(b=>b.fade || b.past || b.saved || b.blocked || b.landed || b.rest>0))){ p.rack--; p.holding=true; p.fig.go('hold',.3); p.state='rise'; p.timer=0;
         if(p.keeper){ p.keeper.dive=null; } } break;
       case 'rise': if(p.timer>.3){ p.state='ready'; p.idle=0; } break;
     }
@@ -3414,8 +3414,13 @@ function drawHUD0(g){
 }
 
 let last=performance.now();
+let FRAME_ERR=0;
 function frame(now){
-  const dt=Math.min(.033,(now-last)/1000); last=now;
+  try{ frame0(now); }catch(e){ if(FRAME_ERR++<5) console.error('kare hatası', e); court.aim=null; activePointer=null; }
+  requestAnimationFrame(frame);
+}
+function frame0(now){
+  const dt=Math.max(0, Math.min(.033,(now-last)/1000)) || 0; last=now;
   const watching = (botTurn() && game==='play') || game==='replay';
   const reps = watching ? botSpeed : 1;
   document.getElementById('botFast').classList.toggle('show', watching);
@@ -3448,7 +3453,6 @@ function frame(now){
   ctx.setTransform(scale*dpr,0,0,scale*dpr,offX*dpr,offY*dpr);
   drawHUD(ctx);
   court.draw(ctx);
-  requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
 
